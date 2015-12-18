@@ -1,8 +1,11 @@
 package com.ada.timetracker.controller;
 
+import java.io.IOException;
+
 import com.ada.timetracker.App;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
@@ -25,7 +28,20 @@ public class MainController {
      */
     @FXML
     private void initialize() {
+    	
+    	//Load Tab View
+    	 try {
+             // Load person overview.
+             FXMLLoader loader = new FXMLLoader();
+             loader.setLocation(App.class.getResource("view/fxml/MyTasks.fxml"));
+             AnchorPane taskList = (AnchorPane) loader.load();
 
+             
+             tab1.setContent(taskList);
+             
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
 
       
     }

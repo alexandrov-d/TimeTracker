@@ -1,15 +1,5 @@
 package com.ada.timetracker.model;
 
-import java.time.LocalDate;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -18,32 +8,12 @@ import javafx.beans.property.StringProperty;
  *
  */
 public class Task {
-
-	/*
-	 @XmlSchemaType(name = "unsignedInt")
-     protected long id;
-     @XmlElement(name = "project_id")
-     @XmlSchemaType(name = "unsignedInt")
-     protected long projectId;
-     @XmlElement(name = "project_name", required = true)
-     protected String projectName;
-     @XmlElement(name = "priority_id")
-     @XmlSchemaType(name = "unsignedInt")
-     protected long priorityId;
-     @XmlElement(required = true)
-     protected String priority;
-     @XmlElement(required = true)
-     protected String name;
-     @XmlElement(name = "due_date", required = true)
-     @XmlSchemaType(name = "date")
-     protected XMLGregorianCalendar dueDate;
-     @XmlElement(name = "actual_time", required = true)
-     protected String actualTime;
-     */
+	
+     
      
     private final StringProperty projectName;
-   /* private final StringProperty lastName;
-    private final StringProperty street;
+    private final StringProperty taskName;
+   /* private final StringProperty street;
     private final IntegerProperty postalCode;
     private final StringProperty city;
     private final ObjectProperty<LocalDate> birthday;*/
@@ -61,9 +31,10 @@ public class Task {
      * @param firstName
      * @param lastName
      */
-    public Task(String projectName, String lastName) {
+    public Task(String projectName, String taskName) {
     	
         this.projectName = new SimpleStringProperty(projectName);
+        this.taskName = new SimpleStringProperty(taskName);
        /* this.lastName = new SimpleStringProperty(lastName);
 
         // Some initial dummy data, just for convenient testing.
@@ -73,12 +44,25 @@ public class Task {
         this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));*/
     }
 
-	public StringProperty getProjectName() {
-		System.out.println(projectName);
+	public String getProjectName() {
+		return projectName.get();
+	}
+	public void setProjectName(String projectName) {
+		this.projectName.set(projectName);
+	}
+	public StringProperty projectNameProperty() {
 		return projectName;
 	}
 	
-
+	public String getTaskName() {
+		return taskName.get();
+	}
+	public void setTaskName(String TaskName) {
+		this.taskName.set(TaskName);
+	}
+	public StringProperty taskNameProperty() {
+		return taskName;
+	}
 
    /* public String getFirstName() {
         return firstName.get();
