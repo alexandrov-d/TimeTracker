@@ -1,32 +1,77 @@
-.task{
+@font-face {
+    font-family: Roboto;
+    src: url('Roboto-Medium.ttf');
+}
 
-	
+.root{
+   -fx-font-family:  "Roboto";
+   -fx-font-size: 11pt;
+}
+
+
+.task{
 	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #eeeeee, #ddd );
-	
-        
+    -fx-background-image: url("../images/button-red2.png");
+    -fx-background-repeat: no-repeat;   
+    -fx-background-size: 30 30;
+    -fx-background-position:  right center;
     -fx-border-color: #aaa;
     -fx-border-width: 1;
     -fx-border-style: solid;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-
 }
+.link{
+-fx-background-color: green;
+	}
+
+/*.vbox:not(.working) */
 .task:hover {
     -fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #f8f8f8, #e1e1e1 );
 }
-
+.hyperlink{
+	
+}
 .task:pressed{
-
+	
    -fx-border-color: cyan;
-  -fx-text-fill: #1d1d1d;
+   -fx-text-fill: #1d1d1d;
 }
-.task:focused{
 
-   -fx-border-color: red;
+.task.selected{
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat,#729FCF,  #3465A4);
+	
+}
+.selected .label, .selected .hyperlink{
+ 	-fx-text-fill: #fff;
+ }
+.vbox{ 
+	-fx-background-color: #8d8d8d;
+	
+  
+}
+/*.vbox.working{
+    -fx-opacity: 0.4;
+}*/
+	
+#startStopTaskButton{
+	   -fx-background-image: url("../images/icons.png");
+	   -fx-background-position: 78 448;
+}
+#startStopTaskButton.stop{
+    -fx-background-image: url("../images/icons.png");
+	-fx-background-position: 151 520;
+}
+#finishTaskButton{
+    -fx-background-image: url("../images/icons.png");
+	-fx-background-position: 78 520;
+}
 
+#taskTimeLabel{
+    -fx-font-family: "digital-7";
+	-fx-font-size: 34pt;
+	-fx-text-fill: #b8860b;
 }
-.vbox{
-	 -fx-background-color: #8d8d8d;
-}
+
 
 

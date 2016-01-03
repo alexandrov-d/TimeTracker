@@ -1,136 +1,191 @@
 package com.ada.timetracker.model;
 
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import com.ada.timetracker.TimeCatcherClient;
+import com.ada.timetracker.controller.MyTasksController;
 
-import com.ada.timetracker.App;
-import com.ada.timetracker.client.TimeCatcherInterface;
-import com.ada.timetracker.client.TimeCatcherService;
-
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Hyperlink;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 
-public class TaskList {
-	
+/**
+ * Task list model class
+ * @author Alexandrov Dmytro
+ *
+ */
+public class TaskList { 
+
 	private static ObservableList<Task> myTaskList = FXCollections.observableArrayList();
 	
-	private Task selected;
-	
-	private Callback<Task, Void> cb;
-//	private Task selected;
+	private static long selectedTaskId;
+	private Pane taskPane;
+
+	private Callback<Task, Void> onTaskSelection;
+	private static TimeCatcherClient client;
 	
     public static ObservableList<Task> getMyTaskListData() {
         return myTaskList;
     }
     
-    public TaskList(){
-		
-		TimeCatcherService service = new TimeCatcherService();
-		  
- 		TimeCatcherInterface server = service.getTimeCatcherEndpoint();
-  
- 		com.ada.timetracker.client.TaskList tasks = server.getTaskList("45c48cce2e2d7fbdea1afc51c7c6ad26" );
+
+    
+    public TaskList(Pane pane){
+	
+    	taskPane = pane;
+    	client = TimeCatcherClient.getInstance();
+    	myTaskList.clear();
  
- 		for (com.ada.timetracker.client.TaskList.Task task : tasks.getTask()) {
+    	ua.com.zetweb.tracktime.ws.types.TaskList remoteTasks = client.getTaskList();
+ 	
+ 		for ( ua.com.zetweb.tracktime.ws.types.TaskList.Task task : remoteTasks.getTask() ) {
+ 			//XMLGregorianCalendar  t = task.getDueDate().toString();
  			myTaskList.add(new Task( 
+				task.getId(),
+				task.getName(),
+				task.getProjectId(),
 				task.getProjectName(), 
-				task.getName()
+				task.getPriorityId(),
+				task.getPriority(),
+				task.getActualTime(),
+				"sss" //task.getDueDate().toString()
 			));	
  		}
-	}
-    
 
-    public void addTo(Pane pane){
-  
-    	App app = App.getInstance();
+	}
+
+    /**
+     * Creates task pane for each task in My task list and adds them to taskPane,
+     *  adds click events to each pane
+     * @param pane A pane to add My task list
+     */
+    public void addToTaskPane(){
     	
+    	taskPane.getChildren().clear();
     	for (Task task : myTaskList) {
+    	
 			AnchorPane taskCanvas = new AnchorPane();
-		
-			Label l1 = new Label(task.getProjectName());
-			Hyperlink hp = new Hyperlink(task.getTaskName());
+			taskCanvas.setPadding(new Insets( 5 ));
+			Label projectLabel = new Label(task.getProjectTitle());
+			projectLabel.setPadding(new Insets( 5 ));
+			Label timeLabel = new Label(task.getTime());
+			timeLabel.setPadding(new Insets( 5 ));
+			String title = task.getTitle();
+			Text text = new Text();
+			if ( title.length() >60){
+				text.setText(title.substring(0, 60)+ "...");
+			}else{
+				text.setText(title);
+			}
+
+			TextFlow textFlow = new TextFlow();
+	
+			AnchorPane.setRightAnchor(textFlow, 0.0);
+			AnchorPane.setLeftAnchor(textFlow, 0.0);
 			
-			hp.setOnAction(new EventHandler<ActionEvent>() {
-	                @Override
-	                public void handle(ActionEvent e) {
-	               
-	                	String url = "http://www.google.com";
-                	//  app.getHostServices().showDocument(hp.getText());
-                	   // app.getHostServices().showDocument("www.google.com");
-                	 // if (Desktop.isDesktopSupported()) {
-                		//  System.out.println(Desktop.isDesktopSupported());
-                	  
-                	 
-                
+			/*Hyperlink taskLink = new Hyperlink("перейти");
+			taskLink.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                	
+                	String url = "http://www.google.com";	
+					Runnable r = () -> {
 						try {
-								
-							Runnable r = () -> {
-								try {
-									Desktop.getDesktop().browse(new URI(url));
-								} catch (Exception e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							};
-						
-							System.out.println("runn");
-							Thread th = new Thread(r);
-							th.start();
-						
-							
-						} catch (Exception   e1) {
-							// TODO Auto-generated catch block
+							Desktop.getDesktop().browse(new URI(url));
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-                		 
-						System.out.println("Done");
-                	    e.consume();
-	                }
-	            });
-
-		//	Label l2 = new Label("<a href=''>" + + "</a>");
-			hp.setLayoutY(50);
-			taskCanvas.getChildren().addAll(l1, hp);
-
+					};
+					Thread th = new Thread(r);
+					th.start();
+            	    e.consume();
+                }
+            });*/
+			textFlow.getChildren().addAll(text);
+		
+			textFlow.setLayoutY(50);
+			timeLabel.setLayoutY(22);
+			taskCanvas.getChildren().addAll(projectLabel, timeLabel, textFlow);
 			taskCanvas.setMinHeight(100);
 			taskCanvas.getStyleClass().add("task");
-
-			pane.getChildren().add(taskCanvas);
+			taskPane.getChildren().add(taskCanvas);
 			
-			EventHandler<MouseEvent> eventHandler = (event) -> {
-		        selected = task;
-		        cb.call(task);
-		        event.consume();
-	    	};
-			
-		
-			taskCanvas.addEventHandler( MouseEvent.MOUSE_CLICKED, eventHandler);
-			
+			taskCanvas.addEventHandler( MouseEvent.MOUSE_CLICKED, onTaskClickHandler(task));
 		}
+    }
+    
+
+    /**
+     * On task list click event
+     * @param task
+     * @param pane
+     * @return void
+     */
+    private EventHandler<MouseEvent> onTaskClickHandler(Task task){
+    	return (event) -> {
+    		if ( !MyTasksController.isWorking()){
+    			//System.out.println(event.getTarget());
+    			selectTask(task, (AnchorPane)event.getTarget());
+		        event.consume();
+    		}
+    	};
+    }
+    
+    private void selectTask(Task task, AnchorPane p ){
+    	taskPane.getChildren().forEach((node)->{
+			int s = node.getStyleClass().indexOf("selected");
+			if ( s != -1){
+				node.getStyleClass().remove(s);
+			}
+		});
+	//	pane.getChildren().get(1);
+    	taskPane.getChildren().get(0).getStyleClass().add("selected");
+        selectedTaskId = task.getId();
+        onTaskSelection.call(task);
+    }
+    
+    public void selectTask2(Pane pane){
+    	//selectTask(myTaskList.get(0));
+    }
+    
+    /**
+     * On task selection Callback function.
+     * @param value <Task> argument provided to the call method.
+     */
+    public void onTaskSelection(Callback<Task, Void> value){
+    	onTaskSelection = value; 
+    }
+    
+
+    public static boolean startWorkingOnTask(){
+    	if ( selectedTaskId != 0){
+    		return client.startTaskExec(selectedTaskId);
+    	}
+    	return false;
+    }
+    
+    public static boolean stopWorkingOnTask(){
+    	if ( selectedTaskId != 0){
+    		return client.stopTaskExec(selectedTaskId);
+    	}
+    	return false;
+    }
+    
+    public static boolean updateTaskTime(){
+    	if ( selectedTaskId != 0){
+    		return client.updateTaskExecTime(selectedTaskId);
+    	}
+    	return false;
+    }
+    
+    public static void reload(){
     	
-     	
-					
-        			
-			
-                /*(observable, oldValue, newValue) -> showPersonDetails(newValue));*/
     }
-    
-    public void callBack(Callback<Task, Void> value){
-    	cb = value; 
-    }
-    
-    
 }

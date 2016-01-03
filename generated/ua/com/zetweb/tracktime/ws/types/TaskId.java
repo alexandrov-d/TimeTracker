@@ -1,5 +1,5 @@
 
-package com.ada.timetracker.client;
+package ua.com.zetweb.tracktime.ws.types;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

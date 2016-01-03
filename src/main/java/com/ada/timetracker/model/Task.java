@@ -1,5 +1,7 @@
 package com.ada.timetracker.model;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,130 +11,121 @@ import javafx.beans.property.StringProperty;
  */
 public class Task {
 	
-     
-     
-    private final StringProperty projectName;
-    private final StringProperty taskName;
-   /* private final StringProperty street;
-    private final IntegerProperty postalCode;
-    private final StringProperty city;
-    private final ObjectProperty<LocalDate> birthday;*/
+    private final LongProperty id;
+    private final StringProperty title;
+    private final LongProperty projectId;
+    private final StringProperty projectTitle;
+    private final LongProperty priorityId;
+    private final StringProperty priorityTitle;
+    private final StringProperty time;
+    private final StringProperty dueDate;
 
     /**
      * Default constructor.
      */
-    public Task() {
+  /*  public Task() {
         this(null, null);
     }
-
-    /**
-     * Constructor with some initial data.
-     * 
-     * @param firstName
-     * @param lastName
-     */
-    public Task(String projectName, String taskName) {
+*/
+    public Task(long id, String title,  long projectId, String projectTitle, long priorityId, String priorityTitle, String  time, String dueDate) {
     	
-        this.projectName = new SimpleStringProperty(projectName);
-        this.taskName = new SimpleStringProperty(taskName);
-       /* this.lastName = new SimpleStringProperty(lastName);
-
-        // Some initial dummy data, just for convenient testing.
-        this.street = new SimpleStringProperty("some street");
-        this.postalCode = new SimpleIntegerProperty(1234);
-        this.city = new SimpleStringProperty("some city");
-        this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));*/
+    	this.id = new SimpleLongProperty( id ); 
+        this.title = new SimpleStringProperty( title );
+        this.projectId = new SimpleLongProperty( projectId );
+        this.projectTitle = new SimpleStringProperty( projectTitle );
+        this.priorityId = new SimpleLongProperty( priorityId );
+        this.priorityTitle = new SimpleStringProperty( priorityTitle );
+        this.time = new SimpleStringProperty( time );
+        this.dueDate = new SimpleStringProperty( dueDate );
     }
 
-	public String getProjectName() {
-		return projectName.get();
+	public long getId() {
+		return id.get();
 	}
-	public void setProjectName(String projectName) {
-		this.projectName.set(projectName);
+	public void setId(String id) {
+		this.title.set(id);
 	}
-	public StringProperty projectNameProperty() {
-		return projectName;
+	public LongProperty idProperty() {
+		return id;
 	}
 	
-	public String getTaskName() {
-		return taskName.get();
+	public String getTitle() {
+		return title.get();
 	}
-	public void setTaskName(String TaskName) {
-		this.taskName.set(TaskName);
+	public void setTitle(String title) {
+		this.title.set(title);
 	}
-	public StringProperty taskNameProperty() {
-		return taskName;
+	public StringProperty titleProperty() {
+		return title;
+	}
+    
+	public long getProjectId() {
+		return projectId.get();
+	}
+	public void setProjectId(int projectId) {
+		this.projectId.set(projectId);
+	}
+	public LongProperty projectIdProperty() {
+		return projectId;
+	}
+	
+	public String getProjectTitle() {
+		return projectTitle.get();
+	}
+	public void setProjectTitle(String projectTitle) {
+		this.projectTitle.set(projectTitle);
+	}
+	public StringProperty projectTitleProperty() {
+		return projectTitle;
 	}
 
-   /* public String getFirstName() {
-        return firstName.get();
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName.set(firstName);
-    }
-
-    public StringProperty firstNameProperty() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName.get();
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName.set(lastName);
-    }
-
-    public StringProperty lastNameProperty() {
-        return lastName;
-    }
-
-    public String getStreet() {
-        return street.get();
-    }
-
-    public void setStreet(String street) {
-        this.street.set(street);
-    }
-
-    public StringProperty streetProperty() {
-        return street;
-    }
-
-    public int getPostalCode() {
-        return postalCode.get();
-    }
-
-    public void setPostalCode(int postalCode) {
-        this.postalCode.set(postalCode);
-    }
-
-    public IntegerProperty postalCodeProperty() {
-        return postalCode;
-    }
-
-    public String getCity() {
-        return city.get();
-    }
-
-    public void setCity(String city) {
-        this.city.set(city);
-    }
-
-    public StringProperty cityProperty() {
-        return city;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday.get();
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday.set(birthday);
-    }
-
-    public ObjectProperty<LocalDate> birthdayProperty() {
-        return birthday;
-    }*/
+	public long getPriorityId() {
+		return priorityId.get();
+	}
+	public void setPriorityId( int priorityId){
+		this.priorityId.set(priorityId);
+	}
+	public LongProperty priorityIdProperty() {
+		return priorityId;
+	}
+	
+	public String getPriorityTitle() {
+		return priorityTitle.get();
+	}
+	public void setPriorityTitle( String priorityTitle ){
+		this.priorityTitle.set( priorityTitle );
+	}
+	public StringProperty priorityTitleProperty() {
+		return priorityTitle;
+	}
+	
+	public String getTime() {
+		return time.get();
+	}
+	public void setTime( String time ){
+		this.time.set( time );
+	}
+	public StringProperty timeProperty() {
+		return time;
+	}
+	
+	public String getDueDate() {
+		return time.get();
+	}
+	public void setDueDate( String dueDate){
+		this.dueDate.set( dueDate );
+	}
+	public StringProperty dueDateProperty() {
+		return dueDate;
+	}
+	
+	public String toString(){
+		
+		return String.format("Проэкт: %s\t Задача: %s\t Время: %s\t, Приоритет: %s\t\n"
+				, getPriorityTitle()
+				, getTitle()
+				, getTime()
+				, getPriorityTitle()
+		);
+	}
 }

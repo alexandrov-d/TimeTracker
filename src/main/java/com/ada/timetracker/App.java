@@ -1,33 +1,31 @@
 package com.ada.timetracker;
 
 import java.io.IOException;
-
-import javax.swing.DefaultBoundedRangeModel;
-
-import com.ada.timetracker.controller.MainController;
-import com.ada.timetracker.controller.MyTasksController;
-import com.ada.timetracker.model.TaskList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * Hello world!
+ * Main application class
+ * @author Alexandrov Dmytro
  *
  */
-
 public class App extends Application
 {
+	private final static Logger LOGGER = Logger.getLogger(App.class.getName());
 	private static App instance = null;
 	
 	private Stage stage;
     private BorderPane rootLayout;
-    private MainController controller;
-    private MyTasksController mcontroller;
-    
+    int count = 1;
     
    /* public static void main( String[] args ){
         launch(args);
@@ -39,25 +37,29 @@ public class App extends Application
 		
 		this.stage = primaryStage;
 		
- instance= this;
+		instance= this;
         this.stage.setTitle("TimeTracker");
-      //  System.out.println(System.getProperty("os.name"));
-        
         
         //TODO  Get Config
      
-    
-   //     AppController controller = new AppController(); 
- 
+        Font.loadFont(App.class.getResource("/font/digital-7.ttf").toExternalForm(), 10);
+        Font.loadFont(App.class.getResource("/font/digital-7-mono.ttf").toExternalForm(), 10);
+
+        // Set the application icon.
+        this.stage.getIcons().add(new Image("/images/button-red.png"));
+
+        
+        
  		stage.setMinWidth(600);
  		stage.setMinHeight(430);
       //  setUserAgentStylesheet(STYLESHEET_CASPIAN);
         
         //Start rendering...
         initLayout();
-        //showPersonOverview();
 		
 	}
+	
+	//private void 
 	
 	 /**
      * Initializes the root layout.
@@ -68,7 +70,6 @@ public class App extends Application
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(App.class.getResource("view/fxml/Main.fxml"));
             rootLayout = (BorderPane) loader.load();
-           // controller = loader.getController();
             
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);

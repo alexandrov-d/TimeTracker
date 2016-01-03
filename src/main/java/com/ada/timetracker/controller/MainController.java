@@ -9,6 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Main.fxml file controller
+ * @author Alexandrov Dmytro
+ */
 public class MainController {
 
 	@FXML
@@ -30,8 +34,8 @@ public class MainController {
     private void initialize() {
     	
     	//Load Tab View
-    	 try {
-             // Load person overview.
+    	try {
+    		//taskList loaded from MyTasks.fxml Controller
              FXMLLoader loader = new FXMLLoader();
              loader.setLocation(App.class.getResource("view/fxml/MyTasks.fxml"));
              AnchorPane taskList = (AnchorPane) loader.load();
@@ -39,11 +43,9 @@ public class MainController {
              
              tab1.setContent(taskList);
              
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-
-      
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -51,15 +53,15 @@ public class MainController {
      * 
      * @param mainApp
      */
-    public void setMainApp( App mainApp) {
+  //  public void setMainApp( App mainApp) {
      //   this.mainApp = mainApp;
 
         // Add observable list data to the table
       //  personTable.setItems(mainApp.getPersonData());
-    }
+    //}
     
-    public void setView( AnchorPane pane){
+   /* public void setView( AnchorPane pane){
     	 tab1.setContent(pane);
-    }
+    }*/
     
 }

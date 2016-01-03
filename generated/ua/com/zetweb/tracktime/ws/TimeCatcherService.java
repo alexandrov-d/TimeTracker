@@ -1,5 +1,5 @@
 
-package com.ada.timetracker.client;
+package ua.com.zetweb.tracktime.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;
