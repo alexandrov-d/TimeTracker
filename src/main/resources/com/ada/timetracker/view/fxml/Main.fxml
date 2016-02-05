@@ -5,21 +5,34 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@../../../../../css/style.css"  minHeight="-Infinity" minWidth="400.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ada.timetracker.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="400.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../css/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ada.timetracker.controller.MainController">
    <top>
       <MenuBar prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Файл">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Закрыть" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <fx:define>
+		      <ToggleGroup fx:id="toggleGroup" />  
+		  </fx:define>
+          <Menu mnemonicParsing="false" text="Опции">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <Menu mnemonicParsing="false" text="Сортировать">
+                     <items>
+                        <RadioMenuItem id="sort-priority" mnemonicParsing="false" onAction="#handleSorting" selected="true" text="Приоритет">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="toggleGroup" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem id="sort-project" mnemonicParsing="false" onAction="#handleSorting" text="Проект" toggleGroup="$toggleGroup" />
+                        <RadioMenuItem id="sort-title" mnemonicParsing="false" onAction="#handleSorting" text="Задача" toggleGroup="$toggleGroup" />
+                     </items>
+                  </Menu>
+              <MenuItem mnemonicParsing="false" onAction="#handleOptions" text="Настройки" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Помощь">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>

@@ -14,7 +14,7 @@ import ua.com.zetweb.tracktime.ws.types.TaskList;
  * @author Alexandrov Dmytro
  *
  */
-public class TimeCatcherClient {
+public class TimeCatcherClient implements Observer{
 	
 	private final TimeCatcherService service;
 	private final TimeCatcherInterface server;
@@ -22,13 +22,16 @@ public class TimeCatcherClient {
 	private String apiKey;
 	private TaskId clientTask = new TaskId();
 
-	private final static Logger LOGGER = Logger.getLogger(App.class.getName());
+	private final static Logger LOGGER = Logger.getLogger("log");
 	
 	private TimeCatcherClient(){
 		this.service = new TimeCatcherService();
 		this.server = service.getTimeCatcherEndpoint();
-		this.apiKey = "45c48cce2e2d7fbdea1afc51c7c6ad26";
-		this.clientTask.setApiKey(apiKey);		
+		Config config = Config.getInstance();
+		this.apiKey = config.getApiKey();
+		config.addObserver(this);
+		this.clientTask.setApiKey(apiKey);	
+		
 	}
 	
 	public static TimeCatcherClient getInstance(){
@@ -68,7 +71,7 @@ public class TimeCatcherClient {
 			LOGGER.log(Level.INFO, "Finish Task method of WS returned:" + i, i);
 		}
 		LOGGER.log(Level.INFO, "Finish Task method Meassge:" + i, i);
-		return i == 0 ? true : false;
+		return i != -1 ? true : false;
 	}
 	
 	public boolean updateTaskExecTime( long taskId ){
@@ -78,8 +81,14 @@ public class TimeCatcherClient {
 			LOGGER.log(Level.INFO, "Update Task method of WS returned:" + i, i);
 			return false;
 		}else{
+			LOGGER.log(Level.INFO, "Updating Task...");
 			return true;
 		}
+	}
+
+	@Override
+	public void update() {
+		this.apiKey = Config.getInstance().getApiKey();
 	}
 
 }

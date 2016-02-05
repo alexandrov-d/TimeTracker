@@ -16,14 +16,14 @@
                <children>
                   <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <VBox fx:id="taskPane" prefHeight="396.0" styleClass="vbox" />
+                        <VBox fx:id="taskListPane" prefHeight="396.0" styleClass="vbox" />
                      </content>
                   </ScrollPane>
                </children>
           </AnchorPane>
           <AnchorPane maxWidth="220.0" minHeight="0.0" minWidth="300.0" prefHeight="398.0" prefWidth="220.0">
                <children>
-                  <GridPane alignment="CENTER" layoutX="0.0" layoutY="117.0" prefHeight="281.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="117.0">
+                  <GridPane alignment="CENTER" layoutX="0.0" layoutY="117.0" prefHeight="281.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="117.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -41,7 +41,7 @@
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Label>
-                        <Label fx:id="projectNameLabel" prefHeight="62.0" prefWidth="290.0" text="Label" GridPane.rowIndex="2">
+                        <Label fx:id="projectNameLabel" prefHeight="62.0" prefWidth="290.0" text="" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
@@ -53,7 +53,7 @@
                         </Label>
                         <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                            <children>
-                              <Text fx:id="taskText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text" wrappingWidth="209.52408981323242" />
+                              <Text fx:id="taskText" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="209.52408981323242" />
                            </children>
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -70,7 +70,7 @@
                     <items>
                       	<Button fx:id="startStopTaskButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#handleStartStopTask" prefHeight="80.0" prefWidth="80.0" />
                         <Separator orientation="VERTICAL" prefHeight="50.0" prefWidth="22.0" visible="false" />
-                        <Button fx:id="finishTaskButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#handleFinishTask" prefHeight="80.0" prefWidth="80.0" text="Finish" />
+                        <Button fx:id="finishTaskButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#handleFinishTask" prefHeight="80.0" prefWidth="80.0" />
                     </items>
                      <padding>
                         <Insets left="51.0" />

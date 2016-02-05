@@ -23,5 +23,9 @@ buildNumber.properties
 RSS/
 param.ini
 rsslist.obj
-
+*.log
+*.log*
+config.xml
+src/main/resources/images/
+TODO.txt
 

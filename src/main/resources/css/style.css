@@ -8,26 +8,62 @@
    -fx-font-size: 11pt;
 }
 
+ .radio-menu-item.selected .label{
+ 	 -fx-text-fill: #000;
+ }
 
 .task{
-	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #eeeeee, #ddd );
-    -fx-background-image: url("../images/button-red2.png");
+	-fx-padding-left:100;
+	-fx-margin-left:100;
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #cfcdcd, #eeeceb );
+   /* -fx-background-image: url("../images/button-red2.png");*/
     -fx-background-repeat: no-repeat;   
-    -fx-background-size: 30 30;
-    -fx-background-position:  right center;
+ 
+    -fx-background-position:  left center;
     -fx-border-color: #aaa;
     -fx-border-width: 1;
     -fx-border-style: solid;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
+.task-priority-high{
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #f4e2e2, #fb856e );
+}
+.priority{
+	-fx-background-image: url("../images/pib.png");
+ 	-fx-background-size: 140;
+    -fx-background-repeat: no-repeat;   
+     -fx-background-position: -59px;
+ }
+
+.priority.priority-0{
+   -fx-background-position: -118px center;
+}
+.priority.priority-1{
+   -fx-background-position: -88px center;
+}
+.priority.priority-4{
+   -fx-background-position: -30px center;
+}
+.priority.priority-5{
+   -fx-background-position: 0px center;
+}
+.task-priority-low {
+	-fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #90b28a, #a4ed97 );
+}
 .link{
--fx-background-color: green;
-	}
+    -fx-background-color: green;
+}
 
 /*.vbox:not(.working) */
 .task:hover {
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #f8f8f8, #e1e1e1 );
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #f1f1f1, #d9d9d9 );
+}
+.task-priority-high:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #fbf4f4, #ff9c89 );
+}
+.task-priority-low:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 50%, repeat, #a2bc9e, #bfffb4 );
 }
 .hyperlink{
 	

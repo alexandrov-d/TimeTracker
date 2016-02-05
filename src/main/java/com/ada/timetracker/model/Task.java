@@ -4,12 +4,13 @@ import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Model class for a Task.
  *
  */
-public class Task {
+public class Task implements Comparable<Task> {
 	
     private final LongProperty id;
     private final StringProperty title;
@@ -19,8 +20,11 @@ public class Task {
     private final StringProperty priorityTitle;
     private final StringProperty time;
     private final StringProperty dueDate;
+    private  AnchorPane taskPane = null;
 
-    /**
+    private static String order = "priority";
+
+	/**
      * Default constructor.
      */
   /*  public Task() {
@@ -35,7 +39,11 @@ public class Task {
         this.projectTitle = new SimpleStringProperty( projectTitle );
         this.priorityId = new SimpleLongProperty( priorityId );
         this.priorityTitle = new SimpleStringProperty( priorityTitle );
-        this.time = new SimpleStringProperty( time );
+        if ( time.isEmpty() ){
+        	this.time =  new SimpleStringProperty( "00:00:00" );
+        }else{
+        	this.time = new SimpleStringProperty( time );
+        }  
         this.dueDate = new SimpleStringProperty( dueDate );
     }
 
@@ -119,6 +127,14 @@ public class Task {
 		return dueDate;
 	}
 	
+    public AnchorPane getTaskPane() {
+		return taskPane;
+	}
+    public void setTaskPane(AnchorPane pane) {
+    	this.taskPane = pane;
+    }
+
+    
 	public String toString(){
 		
 		return String.format("Проэкт: %s\t Задача: %s\t Время: %s\t, Приоритет: %s\t\n"
@@ -127,5 +143,30 @@ public class Task {
 				, getTime()
 				, getPriorityTitle()
 		);
+	}
+	
+	public static void setOrder(String o){
+		order = o;
+	}
+
+	@Override
+	public int compareTo(Task t) {
+	    int result = 0;
+		switch (order) {
+			case "project":
+				result =  t.getProjectId() >= this.getProjectId() ? -1 : 1;
+				break;
+			case "title":
+				result =  t.getId() >= this.getId() ? -1 : 1;
+				break;
+			case "priority" :
+			default:
+				result =  t.getPriorityId() >= this.getPriorityId() ? -1 : 1;
+				break;
+		}
+		
+		return result;
+	
+		
 	}
 }
