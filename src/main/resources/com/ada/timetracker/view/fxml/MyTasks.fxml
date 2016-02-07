@@ -46,11 +46,6 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </Label>
-						<Label prefHeight="23.0" prefWidth="290.0" text="Задача" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
                         <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                            <children>
                               <Text fx:id="taskText" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="209.52408981323242" />
@@ -59,6 +54,20 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </TextFlow>
+                        <GridPane GridPane.rowIndex="3">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                           <children>
+      						<Label prefHeight="23.0" prefWidth="107.0" text="Задача">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Hyperlink text="перейти" fx:id="taskURL" onAction="#handleHyperLink" underline="true" visible="false" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
                        
                       
                      </children>

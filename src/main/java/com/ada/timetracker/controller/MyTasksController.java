@@ -1,5 +1,7 @@
 package com.ada.timetracker.controller;
 
+import java.awt.Desktop;
+import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -21,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -60,6 +63,9 @@ public class MyTasksController {
 	
 	@FXML
 	private Text taskText;
+	
+	@FXML
+	private Hyperlink taskURL;
 	
 	@FXML 
 	private Button startStopTaskButton;
@@ -140,24 +146,6 @@ public class MyTasksController {
 			AnchorPane.setRightAnchor(textFlow, 0.0);
 			AnchorPane.setLeftAnchor(textFlow, 40.0);
 			
-			/*Hyperlink taskLink = new Hyperlink("перейти");
-			taskLink.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                	
-                	String url = "http://www.google.com";	
-					Runnable r = () -> {
-						try {
-							Desktop.getDesktop().browse(new URI(url));
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-					};
-					Thread th = new Thread(r);
-					th.start();
-            	    e.consume();
-                }
-            });*/
 			textFlow.getChildren().addAll(text);
 		
 			textFlow.setLayoutY(50);
@@ -225,6 +213,21 @@ public class MyTasksController {
     	}else{
     		stopTask();
     	}
+    }
+    
+    @FXML
+    private void handleHyperLink(){   	
+    	Task task = TaskList.getById(selectedTaskId);
+		String url = "http://tracktime.zetweb.com.ua/index.php/tasksComments?tasks_id=" + task.getId() + "&projects_id=" + task.getProjectId();
+		Runnable r = () -> {
+			try {
+				Desktop.getDesktop().browse(new URI(url));
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		};
+		Thread th = new Thread(r);
+		th.start();      
     }
 
     private void startTask(){
@@ -300,8 +303,8 @@ public class MyTasksController {
         if (task != null) {
         	projectNameLabel.setText(task.getProjectTitle());
         	taskTimeLabel.setText(task.getTime());
-        	taskText.setText(task.getTitle());
-           
+        	taskText.setText(task.getTitle() + "\n");
+        	taskURL.setVisible(true);
         } else {
         	projectNameLabel.setText("");
         }
