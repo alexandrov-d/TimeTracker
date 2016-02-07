@@ -305,12 +305,14 @@ public class MyTasksController {
 		taskTimer = scheduler.scheduleWithFixedDelay( taskWorkingTimer , 1, 1, TimeUnit.SECONDS);
     }
     
-    
 
     private void stopTimer(){
     	if (taskTimer != null){
     		taskTimer.cancel(true);
     	}
     }
-
-}
+    
+    public static boolean isWorking(){
+    	return working;
+    }
+} 
