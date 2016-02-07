@@ -6,20 +6,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Config implements Subject {
+public class Config extends Observable{
 
 	private static Config instance = new Config();
 	private Properties properties;
 	private static final String CONFIG_FILE = "config.xml";
 	
 	private final static Logger LOGGER = Logger.getLogger("log");
-	private ArrayList<Observer> observers;
+	//private ArrayList<Observer> observers;
 	
 	private Config(){
-		observers = new ArrayList<>();
+		//observers = new ArrayList<>();
 	}
 	
 	public static Config getInstance(){
@@ -69,14 +70,15 @@ public class Config implements Subject {
 		try {
 			output = new FileOutputStream(CONFIG_FILE);
 			properties.storeToXML(output, null);
-			this.notifyObservers();
+			setChanged();
+			notifyObservers();
 			LOGGER.info("Config file updated");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
+	/*@Override
 	public void addObserver(Observer o) {
 		observers.add(o);
 	}
@@ -86,7 +88,7 @@ public class Config implements Subject {
 		for ( Observer o : observers){
 			o.update();
 		}
-	}
+	}*/
 		
 
 }

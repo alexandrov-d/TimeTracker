@@ -1,5 +1,6 @@
 package com.ada.timetracker;
 
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ import ua.com.zetweb.tracktime.ws.types.TaskList;
  * @author Alexandrov Dmytro
  *
  */
-public class TimeCatcherClient implements Observer{
+public class TimeCatcherClient implements java.util.Observer{
 	
 	private final TimeCatcherService service;
 	private final TimeCatcherInterface server;
@@ -86,9 +87,18 @@ public class TimeCatcherClient implements Observer{
 		}
 	}
 
-	@Override
+	/*@Override
 	public void update() {
 		this.apiKey = Config.getInstance().getApiKey();
+	}*/
+
+	@Override
+	public void update(Observable observable, Object arg) {
+		if ( observable instanceof Config){
+			Config config = (Config)observable;
+			this.apiKey = config.getApiKey();
+		}
+		
 	}
 
 }
