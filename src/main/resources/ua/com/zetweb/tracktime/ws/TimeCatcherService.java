@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "TimeCatcherService", targetNamespace = "http://tracktime.zetweb.com.ua/ws/", wsdlLocation = "file:/home/dimon/workspaceEclipse/TimeTracker/set.wsdl")
+@WebServiceClient(name = "TimeCatcherService", targetNamespace = "http://tracktime.zetweb.com.ua/ws/", wsdlLocation = "file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set.wsdl")
 public class TimeCatcherService
     extends Service
 {
@@ -30,7 +30,7 @@ public class TimeCatcherService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/dimon/workspaceEclipse/TimeTracker/set.wsdl");
+            url = new URL("file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
