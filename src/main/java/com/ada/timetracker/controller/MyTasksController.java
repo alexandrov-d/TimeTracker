@@ -1,6 +1,7 @@
 package com.ada.timetracker.controller;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,7 +17,10 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -232,7 +236,10 @@ public class MyTasksController {
     		startTimer();
     	}
     }
-    
+	
+    /**
+     * Stop task, but before make shure that task stoped server.
+     */
     private void stopTask(){
     	if ( selectedTaskId !=0 && client.stopTaskExec(selectedTaskId) ){
     		working = false;
@@ -252,23 +259,42 @@ public class MyTasksController {
      */
     @FXML
     private void handleFinishTask() {
-    	
-    	if ( selectedTaskId !=0 && client.finishTask(selectedTaskId) ){
-    		working = false;
-    		selectedTaskId = 0;
-    		int s = startStopTaskButton.getStyleClass().indexOf("stop");
-			if ( s != -1){
-				startStopTaskButton.getStyleClass().remove(s);
+    	if (confirmationDialog()){
+			if (selectedTaskId != 0 && client.finishTask(selectedTaskId)) {
+
+				working = false;
+				selectedTaskId = 0;
+				int s = startStopTaskButton.getStyleClass().indexOf("stop");
+				if (s != -1) {
+					startStopTaskButton.getStyleClass().remove(s);
+				}
+				taskListPane.setDisable(false);
+
+				stopTimer();
+				initialize();
 			}
-			taskListPane.setDisable(false);
-			
-			stopTimer();
-			initialize();
     	}
+    }
+    /**
+     * Confirmation dialog.
+     * @return either clicked Ok or Cancel
+     */
+    private boolean confirmationDialog(){
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Подтвердить окончание");
+    	alert.setHeaderText("Вы уверены, что хотите закончить \nвыполнение задачи?");
+    	//alert.setContentText("");
+    	//alert.initModality(Modality.APPLICATION_MODAL);
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	return result.get() == ButtonType.OK ? true : false;
     }
     
    
-    
+    /**
+     * Show task details on the right part of application
+     * @param task
+     */
     private void showTaskDetails(Task task) {
     	
         if (task != null) {
@@ -305,7 +331,7 @@ public class MyTasksController {
 		taskTimer = scheduler.scheduleWithFixedDelay( taskWorkingTimer , 1, 1, TimeUnit.SECONDS);
     }
     
-
+    
     private void stopTimer(){
     	if (taskTimer != null){
     		taskTimer.cancel(true);

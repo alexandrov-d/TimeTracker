@@ -6,7 +6,6 @@ import com.ada.timetracker.App;
 import com.ada.timetracker.Config;
 import com.ada.timetracker.model.Task;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
