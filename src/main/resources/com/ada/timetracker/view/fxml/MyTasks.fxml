@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -48,7 +49,7 @@
                         </Label>
                         <TextFlow prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                            <children>
-                              <Text fx:id="taskText" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="209.52408981323242" />
+                              <Text fx:id="taskText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-flow" text="" wrappingWidth="209.52408981323242" />
                            </children>
                            <GridPane.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -65,8 +66,11 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Hyperlink text="перейти" fx:id="taskURL" onAction="#handleHyperLink" underline="true" visible="false" GridPane.columnIndex="1" />
+                              <Hyperlink fx:id="taskURL" onAction="#handleHyperLink" text="перейти" underline="true" visible="false" GridPane.columnIndex="1" />
                            </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                           </rowConstraints>
                         </GridPane>
                        
                       

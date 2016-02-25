@@ -3,6 +3,9 @@ package com.ada.timetracker.controller;
 
 
 import java.util.Properties;
+import java.util.prefs.Preferences;
+
+import com.ada.timetracker.Config;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -11,7 +14,7 @@ import javafx.stage.Stage;
 public class OptionsDialogController {
 	
 	private boolean isOkClicked = false;
-	private Properties properties;
+	private Preferences preferences;
 	
 	@FXML
 	private TextField apiField;
@@ -28,8 +31,9 @@ public class OptionsDialogController {
 	
 	@FXML
 	private void handleOk() {
-		properties.setProperty("apiKey", apiField.getText());
+		preferences.put(Config.API_KEY, apiField.getText());
 		isOkClicked = true;
+		Config.getInstance().setPreferences();
 		dialogStage.close();
 	}
 	
@@ -42,8 +46,8 @@ public class OptionsDialogController {
     	return isOkClicked;
     }
     
-    public void setOptions(Properties props){
-    	this.properties = props;
-    	apiField.setText(properties.getProperty("apiKey", ""));
+    public void setOptions(Preferences prefs){
+    	this.preferences = prefs;
+    	apiField.setText(preferences.get(Config.API_KEY, ""));
     }
 }

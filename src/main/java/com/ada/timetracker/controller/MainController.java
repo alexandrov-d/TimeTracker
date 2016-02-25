@@ -60,11 +60,10 @@ public class MainController {
 
 	@FXML
 	private void handleOptions() {
-		Config config = Config.getInstance();
-		boolean okClicked = App.getInstance()
-				.showOptionsDialog(config.getProperties());
+	//	Config config = Config.getInstance();
+		boolean okClicked = App.getInstance().getOptionsDialog();
 		if (okClicked) {
-			config.saveProperties();
+			//config.saveProperties();
 			myTaskController.reinitialize();
 		}
 	}

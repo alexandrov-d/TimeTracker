@@ -16,9 +16,11 @@ import com.ada.timetracker.model.TaskList;
 import com.ada.timetracker.util.TimeHelper;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -29,6 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -51,6 +54,11 @@ public class MyTasksController {
 	private static TaskList taskList;
 	private static long selectedTaskId;
 	private static TimeCatcherClient client;
+	
+	private  Runnable reinitialize;
+	private Runnable taskWorkingTimer;
+	
+
 	
 	@FXML 
 	private VBox taskListPane;
@@ -94,12 +102,11 @@ public class MyTasksController {
 
         //Schedule reinitialize every  minute
         if (taskListTimer == null ){
-    	    Runnable r = ()-> {
+        	reinitialize = ()-> {
 				Platform.runLater( () -> initialize());
 			};
-        	taskListTimer = scheduler.scheduleWithFixedDelay( r , 60, 60, TimeUnit.SECONDS);
+        	taskListTimer = scheduler.scheduleWithFixedDelay( reinitialize , 60, 60, TimeUnit.SECONDS);
         }
-       
     }
     
     public void reinitialize(){
@@ -116,12 +123,11 @@ public class MyTasksController {
      */
     private void createTaskListPane(){
 
+    	Map<Long, Task> tasks = taskList.getMyTaskListData();
+    	Set<Long> keys = tasks.keySet();
+
     	taskListPane.getChildren().clear();
 
-    	Map<Long, Task> tasks = taskList.getMyTaskListData();
-
-    	Set<Long> keys = tasks.keySet();
-  
     	for (Long key : keys){
 
     		Task task = tasks.get(key);
@@ -140,7 +146,7 @@ public class MyTasksController {
 			}else{
 				text.setText(title);
 			}
-
+			text.setFill(Color.CORNSILK);
 			TextFlow textFlow = new TextFlow();
 			
 			AnchorPane.setRightAnchor(textFlow, 0.0);
@@ -150,27 +156,28 @@ public class MyTasksController {
 		
 			textFlow.setLayoutY(50);
 			timeLabel.setLayoutY(22);
+			timeLabel.getStyleClass().add("time-label");
 			
 			//Add priority pane 
 			Pane p = new Pane();
 			long priority =  task.getPriorityId();
 			p.getStyleClass().add("priority-" + priority );
 			p.getStyleClass().add("priority");
-			p.setMinWidth(30);
-			p.setPrefHeight(100);
-			p.setLayoutX(6);
+			p.setMinWidth(6);
+			p.setPrefHeight(110);
+			p.setLayoutX(1);
 			AnchorPane.setBottomAnchor(p, 0.0);
 	
 			taskPane.getChildren().addAll(p, projectLabel, timeLabel, textFlow);
-			taskPane.setMinHeight(105);
+			taskPane.setMinHeight(110);
 			taskPane.getStyleClass().add("task");
 			
 			if (priority == 5){
 				taskPane.getStyleClass().add("task-priority-high");
 			}
-			taskListPane.getChildren().add(taskPane);
 			task.setTaskPane(taskPane);
 			taskPane.addEventHandler( MouseEvent.MOUSE_CLICKED, onTaskClickHandler(task));
+			taskListPane.getChildren().add(taskPane);
 			
 		}
     }
@@ -198,7 +205,7 @@ public class MyTasksController {
     	
     	task.getTaskPane().getStyleClass().add("selected");
         selectedTaskId = task.getId();
-
+        
     	controlsEnable();
 		showTaskDetails(task);
     }
@@ -262,6 +269,7 @@ public class MyTasksController {
      */
     @FXML
     private void handleFinishTask() {
+    	
     	if (confirmationDialog()){
 			if (selectedTaskId != 0 && client.finishTask(selectedTaskId)) {
 
@@ -286,8 +294,7 @@ public class MyTasksController {
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setTitle("Подтвердить окончание");
     	alert.setHeaderText("Вы уверены, что хотите закончить \nвыполнение задачи?");
-    	//alert.setContentText("");
-    	//alert.initModality(Modality.APPLICATION_MODAL);
+ 
     	Optional<ButtonType> result = alert.showAndWait();
     	
     	return result.get() == ButtonType.OK ? true : false;
@@ -324,7 +331,7 @@ public class MyTasksController {
     private void startTimer(){
     	timePassed = TimeHelper.stringToSeconds(taskTimeLabel.getText());
     	int startTime = timePassed;
-    	Runnable taskWorkingTimer =  () ->{
+    	taskWorkingTimer =  () ->{
 			Platform.runLater( () -> taskTimeLabel.setText(TimeHelper.secondsToString(++timePassed)) );
 			//Update task time on server every 120 seconds
 			if ( (timePassed - startTime) % 120  == 0 ){

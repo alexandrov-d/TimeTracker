@@ -34,16 +34,20 @@ import javafx.stage.WindowEvent;
  *
  */
 public class App extends Application {
+	
 	// private final static Logger LOGGER = Logger.getLogger("log");
 	private static App instance = null;
 
 	private Stage primaryStage;
+	
+	private Stage dialogStage;
+	OptionsDialogController dialogController;
+	
 	private BorderPane rootLayout;
 	
 //	private java.awt.TrayIcon trayIcon;
 	// int count = 1;
 
-	// private static final String iconImageRun = "/";
 	// private static final String iconImageRun = "/";
 
 	public static void main(String[] args) {
@@ -56,17 +60,9 @@ public class App extends Application {
 		Log.set();
 	    Platform.setImplicitExit(false);
 	    
-	    
-		// javax.swing.SwingUtilities.invokeLater(()->addAppToTray());
-
-		// Terminate application if another instance already started
-		if (!AppInstanceManager.registerInstance()) {
-			// instance already running.
-			System.out.println("Another instance of this application is already running.  Exiting.");
-			System.exit(0);
-		}
-		// If another instance of app already exists this listener puts main
-		// window to front
+		isAppAlreadyRunning();
+		
+		// If another instance of app already exists this listener puts main window to front
 		AppInstanceManager.setAppInstanceListener(() -> Platform.runLater(() -> primaryStage.toFront()));
 
 		this.primaryStage = primaryStage;
@@ -88,21 +84,12 @@ public class App extends Application {
 
 		// Load configuration
 		Config config = Config.getInstance();
-		if (!config.load() && showOptionsDialog(config.getProperties())) {
-			config.saveProperties();
+	
+		if ( config.getApiKey() == "" ) {
+			getOptionsDialog();
 		}
 
-		// Start rendering...
 		initLayout();
-
-		/*
-		 * Alert alert = new Alert(AlertType.WARNING);
-		 * alert.initOwner(primaryStage); alert.setTitle("No Selection");
-		 * alert.setHeaderText("No Person Selected"); alert.setContentText(
-		 * "Please select a person in the table.");
-		 * 
-		 * alert.showAndWait();
-		 */
 	
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
@@ -122,6 +109,14 @@ public class App extends Application {
 				});
 			}
 		});
+	}
+
+	private void isAppAlreadyRunning() {
+		if (!AppInstanceManager.registerInstance()) {
+			// instance already running.
+			System.out.println("Another instance of this application is already running.  Exiting.");
+			System.exit(0);
+		}
 	}
 
 	// private void
@@ -147,13 +142,26 @@ public class App extends Application {
 	}
 
 	/**
-	 * Load options dialog
-	 * 
-	 * @param props
-	 *            properties
 	 * @return boolean true if Ok button is clicked
 	 */
-	public boolean showOptionsDialog(Properties props) {
+	public boolean getOptionsDialog() {
+		
+		if (dialogStage == null){
+			return createOptionsDialog();
+		}else{
+			return showOptionsDialog();
+		}
+
+	}
+
+	private boolean showOptionsDialog() {
+		dialogController.setOptions(Config.getInstance().getPreferences());
+		dialogStage.showAndWait();
+
+		return dialogController.isOkClicked();
+	}
+
+	private boolean createOptionsDialog() {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader();
@@ -161,7 +169,7 @@ public class App extends Application {
 			AnchorPane page = (AnchorPane) loader.load();
 
 			// Create the dialog Stage.
-			Stage dialogStage = new Stage();
+			dialogStage = new Stage();
 			dialogStage.setTitle("Настройки");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
@@ -169,15 +177,10 @@ public class App extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the person into the controller.
-			OptionsDialogController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
+			dialogController = loader.getController();
+			dialogController.setDialogStage(dialogStage);
 
-			controller.setOptions(props);
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-
-			return controller.isOkClicked();
+			return showOptionsDialog();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -216,6 +219,7 @@ public class App extends Application {
 			java.awt.Font boldFont = defaultFont.deriveFont(java.awt.Font.BOLD);
 			openItem.setFont(boldFont);
 			
+			
 			//exit tray menu item
 			MenuItem exitItem = new java.awt.MenuItem("Выйти");
 	            exitItem.addActionListener(event -> {  
@@ -226,6 +230,7 @@ public class App extends Application {
 	            
 			//try icon menu
 			PopupMenu popup = new PopupMenu();
+
 			popup.add(openItem);
 			popup.addSeparator();
             popup.add(exitItem);

@@ -19,14 +19,11 @@ import com.ada.timetracker.TimeCatcherClient;
  */
 public class TaskList { 
 
-//	private static ObservableList<Task> myTaskList = FXCollections.observableArrayList();
 	private static Map<Long, Task> myTaskList; 
 
 	private static TimeCatcherClient client;
 	
-   /* public  ObservableList<Task> getMyTaskListData() {
-        return myTaskList;
-    }*/
+
     public   Map<Long, Task> getMyTaskListData() {
     	return myTaskList;
     }
@@ -79,17 +76,6 @@ public class TaskList {
  		}
  		myTaskList = entriesSortedByValues(myTaskList);
 	}
-    
-
-
-   /* public static boolean startWorkingOnTask( long taskId){
-   
-    	return client.startTaskExec(taskId);
-    }
-    
-    public static boolean stopWorkingOnTask(long taskId ){
-		return client.stopTaskExec(taskId);
-    }*/
     
     public static Task getById( long id ){
     	return myTaskList.get(id);
