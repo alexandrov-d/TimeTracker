@@ -28,4 +28,4 @@ rsslist.obj
 config.xml
 src/main/resources/images/
 TODO.txt
-
+test_*

@@ -125,7 +125,7 @@ public class App extends Application {
 	 * Initializes the root layout.
 	 */
 	public void initLayout() {
-		try {
+		try { 
 			// Load root layout from fxml file.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(App.class.getResource("view/fxml/Main.fxml"));
@@ -228,7 +228,7 @@ public class App extends Application {
 	                System.exit(0);
 	            });
 	            
-			//try icon menu
+			//tray icon menu
 			PopupMenu popup = new PopupMenu();
 
 			popup.add(openItem);
@@ -242,9 +242,7 @@ public class App extends Application {
 			openItem.addActionListener(event -> Platform.runLater(()->showStage(trayIcon)));
 
 			systemTray.add(trayIcon);
-			//systemTray.remove(trayIcon);
-			//tray.
-			// URL imageLoc = new URL(icon);
+		
 		} catch (java.awt.AWTException | IOException e) {
 			System.out.println("Unable to init system tray");
 			e.printStackTrace();
@@ -256,5 +254,5 @@ public class App extends Application {
 		primaryStage.show();
 		primaryStage.toFront();
 	}
-
+	
 }
