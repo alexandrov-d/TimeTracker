@@ -23,11 +23,10 @@ public class WorkingBitTest {
 		Date trialTime = new Date();
 		calendar.setTime(trialTime);
 		Date d = calendar.getTime();
-		System.out.println("YEAR: " + calendar.getFirstDayOfWeek());
+	
 		
 		DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
 		
 		DateFormat sdf = new SimpleDateFormat("y-m-d:h");
-		System.out.println(sdf.format(d));
 	}
 }

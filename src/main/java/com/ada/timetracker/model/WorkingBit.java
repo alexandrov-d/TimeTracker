@@ -1,6 +1,6 @@
 package com.ada.timetracker.model;
 
-public class WorkingBit {
+public class WorkingBit implements Comparable<WorkingBit>{
 	
 	private String hour;
 	private long taskId;
@@ -56,5 +56,30 @@ public class WorkingBit {
 	
 	public void addTime(int time){
 		this.time += time;
+	}
+
+
+	@Override
+	public int compareTo(WorkingBit wb) {
+		
+		boolean hourEq = this.hour.equals(wb.hour);
+		boolean titleEq = this.taskId== wb.taskId;
+		
+		if ( hourEq && titleEq ){
+			return 0;
+		}else{
+			return 1;
+		}		
+	}
+	
+	@Override
+	public String toString(){
+		
+		return String.format("Hour: %s\t Task Id: %s\t Task Title: %s\t, Time: %s\t"
+				, getHour()
+				, getTaskId()
+				, getTaskTitle()
+				, getTime()
+		);
 	}
 }

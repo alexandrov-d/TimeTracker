@@ -1,14 +1,11 @@
 package com.ada.timetracker.util;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.ada.timetracker.model.WorkingBit;
 import com.ada.timetracker.model.WorkingBitListWrapper;
@@ -24,16 +21,17 @@ public class WorkingBitManager {
 	
 	private File file;
 	
-	private List<WorkingBit> workingBitList;
+	private WorkingBitListWrapper bitsWrapper;
 	
 	public WorkingBitManager(File file){
 		
 		this.file = file;
 		
+		bitsWrapper = new WorkingBitListWrapper();
+		
 		if ( file.exists() ){
 			loadWorkingBitListFromFile();
 		}else{
-			workingBitList = new ArrayList<>();
 			saveWorkingBitList();
 		}		
 	}
@@ -47,11 +45,11 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	        WorkingBitListWrapper wrapper = new WorkingBitListWrapper();
-	        wrapper.setWorkingBitList(workingBitList);
+	        //bitsWrapper = new WorkingBitListWrapper();
+	       // wrapper.setWorkingBitList(workingBitList);
 
 	        // Marshalling and saving XML to the file.
-	        m.marshal(wrapper, file);
+	        m.marshal(bitsWrapper, file);
 
 	    } catch (Exception e) { 
 	    	e.printStackTrace();
@@ -63,9 +61,9 @@ public class WorkingBitManager {
 	    }
 	}
 	
-	public List<WorkingBit> getWorkingBitList(){
+/*	public List<WorkingBit> getWorkingBitList(){
 		return workingBitList;
-	}
+	}*/
 	
 	
 	/**
@@ -77,13 +75,8 @@ public class WorkingBitManager {
 	        Unmarshaller um = context.createUnmarshaller();
 	  
 	        // Reading XML from the file and unmarshalling.
-	        WorkingBitListWrapper wrapper = (WorkingBitListWrapper) um.unmarshal(file);
+	        bitsWrapper = (WorkingBitListWrapper) um.unmarshal(file);
 	        
-	        workingBitList = wrapper.getWorkingBitList(); 
-	        if (workingBitList == null){
-	        	workingBitList = new ArrayList<>();
-	        }
-
 
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
@@ -101,8 +94,9 @@ public class WorkingBitManager {
 	 * Add the current working bit data to the specified file.
 	 * 
 	 * @param workingBit
+	 * @param working is we were working from the last adding
 	 */
-	public void addWorkingBitToFile(WorkingBit workingBit) {
+	public void addWorkingBitToFile(WorkingBit workingBit, Boolean working) {
 		
 	    try {
 	        JAXBContext context = JAXBContext.newInstance(WorkingBitListWrapper.class);
@@ -110,13 +104,13 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	        // Wrapping our person data.
-	        WorkingBitListWrapper wrapper = new WorkingBitListWrapper();
-	        
-	        workingBitList.add(workingBit);
-	        wrapper.setWorkingBitList(workingBitList);
-	    
-	        m.marshal(wrapper, file);
+	        if ( working ){
+	        	 bitsWrapper.add(workingBit);
+	        }else{
+	        	bitsWrapper.insert(workingBit);
+	        }
+	       
+	        m.marshal(bitsWrapper, file);
 
 	        // Save the file path to the registry.
 	     //   setPersonFilePath(file);
@@ -131,6 +125,9 @@ public class WorkingBitManager {
 	}
 
 
+	public List<WorkingBit> getWorkingBitList() {
+		return bitsWrapper.getWorkingBitList();
+	}
 	
 	
 }

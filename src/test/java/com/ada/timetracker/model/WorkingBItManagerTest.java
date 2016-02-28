@@ -19,28 +19,95 @@ public class WorkingBItManagerTest {
 
 	@Test
 	public void testAddNewWorkingBitToFile(){
-		
-		String title = "Сделать все как нужно : " +  new Random().nextInt(5000);
+
+		String title = "Add NEW working bit: " +  new Random().nextInt(5000);
 		int time = new Random().nextInt(100);
 		int id = new Random().nextInt(50);
-		id = 100;
+		id = 10;
 		
-		WorkingBit wb = new WorkingBit("2016-6-27:1", id, title, "Главный проект", time);
+		WorkingBit wb = new WorkingBit("2016-6-28:1", id, title, "Project add NEW", time);
 		
 		File file = new File(XML_FILE_ADD);
 
 		WorkingBitManager manager1 = new WorkingBitManager(file);
 
-		manager1.addWorkingBitToFile(wb);
+		manager1.addWorkingBitToFile(wb, false);
 		
 		WorkingBitManager manager2 = new WorkingBitManager(file);
 		List<WorkingBit> list = manager2.getWorkingBitList();
+		
 		assertEquals("WorkingBit mismatch", title, list.get(list.size()-1).getTaskTitle());
+	}
+	
+	@Test 
+	public void TestAddTimeToLastWorkingBitWithDifferentId(){
+
+		File file = new File(XML_FILE_ADD);
+		
+		String title = "Test Add working bit time Differnt Id: ";
+		String project = "Project Add Time Diff ID" ;
+		int time = 500;
+		WorkingBit wb = new WorkingBit("2016-6-28:5", 100, title, project, time);
+		WorkingBitManager manager1 = new WorkingBitManager(file);
+		manager1.addWorkingBitToFile(wb, false);
+		
+		int time2 = 10;
+		WorkingBit wb2 = new WorkingBit("2016-6-28:5", 101, title, project, time2);
+		manager1.addWorkingBitToFile(wb2, true);
+
+		WorkingBitManager manager2 = new WorkingBitManager(file);
+		List<WorkingBit> list = manager2.getWorkingBitList();
+		
+		assertEquals("WorkingBit time sum incorrect", time2, list.get(list.size()-1).getTime());
+	}
+	
+	@Test 
+	public void TestAddTimeToLastWorkingBit(){
+
+		File file = new File(XML_FILE_ADD);
+		
+		String title = "Test Add working bit time: ";
+		String project = "Project Add Time" ;
+		int time = 100;
+		WorkingBit wb = new WorkingBit("2016-6-27:1", 100, title, project, time);
+		WorkingBitManager manager1 = new WorkingBitManager(file);
+		manager1.addWorkingBitToFile(wb, false);
+		
+		int time2 = 10;
+		WorkingBit wb2 = new WorkingBit("2016-6-27:1", 100, title, project, time2);
+		manager1.addWorkingBitToFile(wb2, true);
+
+		WorkingBitManager manager2 = new WorkingBitManager(file);
+		List<WorkingBit> list = manager2.getWorkingBitList();
+		
+		assertEquals("WorkingBit time sum incorrect", time + time2, list.get(list.size()-1).getTime());
 	}
 	
 	
 	@Test
-	public void testGetWorkingBitListFromUnexistedFile(){
+	public void TestAddTimeToLastWorkingBitOnHourVerge(){
+	File file = new File(XML_FILE_ADD);
+		
+		String title = "Test Add working bit time Hour verge: ";
+		String project = "Project Add Time hour verge" ;
+		int time = 100;
+		WorkingBit wb = new WorkingBit("2016-5-27:1", 57, title, project, time);
+		WorkingBitManager manager1 = new WorkingBitManager(file);
+		manager1.addWorkingBitToFile(wb, false);
+		
+		int time2 = 10;
+		WorkingBit wb2 = new WorkingBit("2016-5-27:2", 57, title, project, time2);
+		manager1.addWorkingBitToFile(wb2, true);
+
+		WorkingBitManager manager2 = new WorkingBitManager(file);
+		List<WorkingBit> list = manager2.getWorkingBitList();
+		
+		assertEquals("WorkingBit time sum incorrect ", time2, list.get(list.size()-1).getTime());
+	}
+	
+	
+	@Test
+	public void TestGetWorkingBitListFromUnexistedFile(){
 		
 		File file = new File(XML_FILE_DEL);
 		file.delete();
