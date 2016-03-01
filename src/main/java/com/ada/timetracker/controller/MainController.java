@@ -9,10 +9,13 @@ import com.ada.timetracker.model.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Main.fxml file controller
@@ -24,10 +27,13 @@ public class MainController {
 	MyTasksController myTaskController;
 
 	@FXML
-	private Tab tab1;
-
+	private Tab taskTab;
+	
 	@FXML
-	private ToggleGroup toggleGroup;
+	private Tab statisticTab;
+
+	//@FXML
+	//private ToggleGroup toggleGroup;
 
 	/**
 	 * The constructor. The constructor is called before the initialize()
@@ -42,28 +48,31 @@ public class MainController {
 	 */
 	@FXML
 	private void initialize() {
-
-		// Load Tab View
+	
 		try {
-			// taskList loaded from MyTasks.fxml Controller
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(App.class.getResource("view/fxml/MyTasks.fxml"));
-			AnchorPane taskList = (AnchorPane) loader.load();
-			myTaskController = loader.getController();
-
-			tab1.setContent(taskList);
-
+			populateTaskTab();
+			populateStatisticTab();
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	private void populateTaskTab() throws IOException {
+		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(App.class.getResource("view/fxml/MyTasks.fxml"));
+		AnchorPane taskList = (AnchorPane) loader.load();
+		myTaskController = loader.getController();
+
+		taskTab.setContent(taskList);
+	}
+
 	@FXML
 	private void handleOptions() {
-	//	Config config = Config.getInstance();
+
 		boolean okClicked = App.getInstance().getOptionsDialog();
 		if (okClicked) {
-			//config.saveProperties();
 			myTaskController.reinitialize();
 		}
 	}
@@ -84,6 +93,30 @@ public class MainController {
 	@FXML
 	private void handleExit(Event event) {
 		System.exit(0);
+	}
+
+	private void populateStatisticTab() {
+	
+	    try {
+	        // Load the fxml file and create a new stage for the popup.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(App.class.getResource("view/fxml/WorkingChart.fxml"));
+	        AnchorPane chart = (AnchorPane) loader.load();
+	        statisticTab.setContent(chart);
+	        
+	      //  Scene scene = new Scene(chart);
+	     //   dialogStage.setScene(scene);
+
+	        // Set the persons into the controller.
+	    //    WorkingChartController controller = loader.getController();
+	       // controller.setPersonData(personData);
+
+	     //   dialogStage.show();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+		
 	}
 
 }

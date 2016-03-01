@@ -1,6 +1,13 @@
 package com.ada.timetracker.util;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -22,6 +29,7 @@ public class WorkingBitManager {
 	private File file;
 	
 	private WorkingBitListWrapper bitsWrapper;
+	
 	
 	public WorkingBitManager(File file){
 		
@@ -128,6 +136,36 @@ public class WorkingBitManager {
 	public List<WorkingBit> getWorkingBitList() {
 		return bitsWrapper.getWorkingBitList();
 	}
+
+	/**
+	 * Get HashMap of day/minutes pairs from workingbitList
+	 * @return Format: "02/09" => 100
+	 */
+	public HashMap<String, Double> getWorkingBitListByDays() {
+		
+		List<WorkingBit> bits = bitsWrapper.getWorkingBitList();
+		
+		SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd:H");
+		SimpleDateFormat formater = new SimpleDateFormat("MM/dd");
 	
+		GregorianCalendar calendar = new GregorianCalendar();
+
+		HashMap<String, Double> dayMap = new HashMap<>(); 
+		Date d;
 	
+		for (WorkingBit bit : bits){
+			try {
+				d = parser.parse(bit.getHour());
+				calendar.setTime(d);
+				String day =  formater.format(calendar.getTime());
+				dayMap.merge(day, bit.getTime()/60.0, Double::sum);
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return dayMap;
+	}
+
 }

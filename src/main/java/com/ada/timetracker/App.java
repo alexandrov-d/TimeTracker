@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.ada.timetracker.controller.MyTasksController;
 import com.ada.timetracker.controller.OptionsDialogController;
+import com.ada.timetracker.controller.WorkingChartController;
 import com.ada.timetracker.util.AppInstanceManager;
 import com.ada.timetracker.util.Log;
 
@@ -254,5 +255,7 @@ public class App extends Application {
 		primaryStage.show();
 		primaryStage.toFront();
 	}
+	
+	
 	
 }

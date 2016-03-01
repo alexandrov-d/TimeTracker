@@ -145,3 +145,6 @@
     -fx-focus-color:  derive(#1d1d1d,80%);
         -fx-opacity: 0.9;
 }
+.chart-horizontal-grid-lines {
+    -fx-stroke: #565656;
+}

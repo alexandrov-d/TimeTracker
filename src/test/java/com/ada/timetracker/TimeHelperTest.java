@@ -1,49 +1,37 @@
 package com.ada.timetracker;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 import com.ada.timetracker.util.TimeHelper;
-@Ignore
-@RunWith(Parameterized.class)
+
+
 public class TimeHelperTest {
 	
-	private String timeString;
-	private int seconds;
-	
-	@Parameters
-	public static List<Object[]> data(){
-		return Arrays.asList(new Object[][]{
-			{"00:00:00", 0},
-			{"00:00:05", 5},
-			{"01:30:08", 5408},
-			{"01:00:05", 3605},
-			{"11:20:37", 40837},
-			
-		});
-	}
-	
-	public TimeHelperTest(String timeString, int seconds){
-		this.timeString = timeString;
-		this.seconds = seconds;
-	}
-
 	@Test
-	public void ConvertsStringToNumOfSeconds() {
-		assertEquals( seconds,TimeHelper.stringToSeconds(timeString));
+	public void getDaysTest() {
+		
+		int numOfDays = -10;
+		List<Date>  days = TimeHelper.getDaysRange(numOfDays);
+		assertEquals(0, days.size());
+		
+		numOfDays = 30;
+		days = TimeHelper.getDaysRange(numOfDays);
+		assertEquals(numOfDays, days.size());
+		
+		
+		DateFormat formater = new SimpleDateFormat("M/d");
+		for ( int i = days.size() -1; i > 0; i--){
+			System.out.println(formater.format(days.get(i)));
+		}
+    	
 	}
-	
-	@Test
-	public void ConvertsNumOfSecondsToString() {
-		assertEquals( timeString,TimeHelper.secondsToString(seconds));
-	}
-
 }

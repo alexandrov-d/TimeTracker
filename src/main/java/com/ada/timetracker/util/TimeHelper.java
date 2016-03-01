@@ -1,5 +1,13 @@
 package com.ada.timetracker.util;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.jws.soap.SOAPBinding;
+
 public class TimeHelper {
 	
 	/**
@@ -28,5 +36,32 @@ public class TimeHelper {
 		s = sec < 10 ? "0" + sec : sec + "";
 
 		return h + ":" + m + ":" + s ;
+	}
+	
+	public static String doubleHoursToTime(Double hours){
+		int h = hours.intValue();
+		long min = Math.round(hours%1*0.6*100);
+		String ms = String.valueOf(min);
+		if ( min < 10){
+			ms = "0" + min;
+		}
+		return h + ":" + ms;
+	}
+	
+	public static List<Date> getDaysRange(int numOfDays) {
+		
+	    List<Date> dates = new ArrayList<Date>();
+	    Calendar calendar = new GregorianCalendar();
+
+		Date now = new Date();
+		calendar.setTime(now);
+		
+		while ( numOfDays > 0) {
+			dates.add(calendar.getTime());
+			calendar.add(Calendar.DATE, -1);
+			numOfDays--;
+		}
+	
+		return dates;
 	}
 }

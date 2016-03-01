@@ -5,7 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="500.0" prefHeight="500.0" prefWidth="700.0" stylesheets="@../../../../../css/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ada.timetracker.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="100.0" minWidth="500.0" prefHeight="500.0" prefWidth="700.0" 
+	stylesheets="@../../../../../css/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="com.ada.timetracker.controller.MainController">
    <top>
       <MenuBar prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <menus>
@@ -43,12 +45,12 @@
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab fx:id="tab1" text="Мои задачи">
+          <Tab fx:id="taskTab" text="Мои задачи">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-          <Tab text="Моя статистика">
+          <Tab fx:id="statisticTab" text="Моя статистика">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
