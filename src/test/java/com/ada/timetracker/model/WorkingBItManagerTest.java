@@ -164,9 +164,9 @@ public class WorkingBItManagerTest {
 		}
 		
 		
-		HashMap<String, Integer> minutesPerDay = manager.getWorkingBitListByDays();
-		
-		assertEquals(totalForADay, (int)minutesPerDay.get("02/09"));
+		HashMap<String, Double> minutesPerDay = manager.getWorkingBitListByDays();
+		assertFalse(true);
+		assertEquals(totalForADay, minutesPerDay.get("02/09").doubleValue());
 	}
 	
 	

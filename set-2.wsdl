@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <definitions
 	name="TimeCatcher"
-	targetNamespace="http://tracktime.zetweb.com.ua/ws/"
+	targetNamespace="http://tracktime.zetweb.com.ua/ws-test/"
 	xmlns="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://tracktime.zetweb.com.ua/ws/"
+	xmlns:tns="http://tracktime.zetweb.com.ua/ws-test/"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsd="http://tracktime.zetweb.com.ua/ws/types/"
+	xmlns:xsd="http://tracktime.zetweb.com.ua/ws-test/types/"
 >
 	<types>
-		<schema targetNamespace="http://tracktime.zetweb.com.ua/ws/types/" xmlns="http://www.w3.org/2001/XMLSchema">
+		<schema targetNamespace="http://tracktime.zetweb.com.ua/ws-test/types/" xmlns="http://www.w3.org/2001/XMLSchema">
 			<simpleType name="ApiKey">
 				<restriction base="string">
 					<length value="32" fixed="true"/>
@@ -211,7 +211,7 @@
 	
 	<service name="TimeCatcherService">
 		<port name="TimeCatcherEndpoint" binding="tns:TimeCatcherBinding">
-			<soap:address location="http://tracktime.zetweb.com.ua/ws/index.php"/>
+			<soap:address location="http://tracktime.zetweb.com.ua/ws-test/index.php"/>
 		</port>
 	</service>
 </definitions>

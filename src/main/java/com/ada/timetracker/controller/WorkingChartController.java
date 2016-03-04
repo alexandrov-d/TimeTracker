@@ -2,8 +2,11 @@ package com.ada.timetracker.controller;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import javafx.scene.control.Tooltip;
 
 public class WorkingChartController {
 	
+	private final static String DATE_FORMAT = "MM/dd";
 	@FXML
     private BarChart<String, Number> barChart;
 
@@ -42,8 +46,8 @@ public class WorkingChartController {
     @FXML
     private void initialize() {
      
-    	List<Date> dates = TimeHelper.getDaysRange(15);
-    	DateFormat formater = new SimpleDateFormat("MM/dd");
+    	List<Date> dates = TimeHelper.getDaysRange(30);
+    	DateFormat formater = new SimpleDateFormat(DATE_FORMAT);
     	
     	for ( int i = dates.size() -1; i >= 0; i--){
     		dayNumbers.add(formater.format(dates.get(i)));
@@ -51,14 +55,13 @@ public class WorkingChartController {
     
         // Assign the month names as categories for the horizontal axis.
         xAxis.setCategories(dayNumbers);
-        yAxis.setLabel("Hours");
-        
-    
      
-        
+        barChart.setLegendVisible(false);
+ 
+        yAxis.setLabel("Hours");
+     
         
         setWorkingBitData();
-     
         
     }
     
@@ -83,13 +86,36 @@ public class WorkingChartController {
             series.getData().add(new XYChart.Data<>(key, (value == null ? 0 : value)));
         }
         barChart.getData().add(series);
+        String[] colors = {"derive(#1d1d1d,50%)", "derive(#1d1d1d,80%)"};
+        int colorIndex = 0;
+       
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date());
+        int year = calendar.get(Calendar.YEAR);
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyy/" + DATE_FORMAT);
+     
         
         for (final Series<String, Number> series2 : barChart.getData()) {
             for (final Data<String, Number> data : series2.getData()) {
                  Tooltip tooltip = new Tooltip();
                  tooltip.setText(TimeHelper.doubleHoursToTime(data.getYValue().doubleValue()));
-               //  tooltip.
-                 Tooltip.install(data.getNode(), tooltip);                    
+                 Tooltip.install(data.getNode(), tooltip); 
+                 
+                 try {
+					calendar.setTime( dateParser.parse( year + "/" + data.getXValue() )) ;
+				
+					if ( calendar.get(Calendar.DAY_OF_WEEK) == 2 ){
+						colorIndex = 1 - colorIndex;
+					}
+		
+					data.getNode().setStyle("-fx-background-color:" + colors[colorIndex]);
+					  
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+                
+              
+               
             }
        }
     }

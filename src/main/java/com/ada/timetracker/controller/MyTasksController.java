@@ -131,6 +131,7 @@ public class MyTasksController {
     	for (Long key : keys){
 
     		Task task = tasks.get(key);
+
 			AnchorPane taskPane = new AnchorPane();
 			
 			Label projectLabel = new Label(task.getProjectTitle());

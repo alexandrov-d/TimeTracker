@@ -17,20 +17,20 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "TimeCatcherService", targetNamespace = "http://tracktime.zetweb.com.ua/ws/", wsdlLocation = "file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set.wsdl")
+@WebServiceClient(name = "TimeCatcherService", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/", wsdlLocation = "file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set-2.wsdl")
 public class TimeCatcherService
     extends Service
 {
 
     private final static URL TIMECATCHERSERVICE_WSDL_LOCATION;
     private final static WebServiceException TIMECATCHERSERVICE_EXCEPTION;
-    private final static QName TIMECATCHERSERVICE_QNAME = new QName("http://tracktime.zetweb.com.ua/ws/", "TimeCatcherService");
+    private final static QName TIMECATCHERSERVICE_QNAME = new QName("http://tracktime.zetweb.com.ua/ws-test/", "TimeCatcherService");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set.wsdl");
+            url = new URL("file:/home/dimon/Development/EclipseWorkspace/Mars/TimeTracker/set-2.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -69,7 +69,7 @@ public class TimeCatcherService
      */
     @WebEndpoint(name = "TimeCatcherEndpoint")
     public TimeCatcherInterface getTimeCatcherEndpoint() {
-        return super.getPort(new QName("http://tracktime.zetweb.com.ua/ws/", "TimeCatcherEndpoint"), TimeCatcherInterface.class);
+        return super.getPort(new QName("http://tracktime.zetweb.com.ua/ws-test/", "TimeCatcherEndpoint"), TimeCatcherInterface.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class TimeCatcherService
      */
     @WebEndpoint(name = "TimeCatcherEndpoint")
     public TimeCatcherInterface getTimeCatcherEndpoint(WebServiceFeature... features) {
-        return super.getPort(new QName("http://tracktime.zetweb.com.ua/ws/", "TimeCatcherEndpoint"), TimeCatcherInterface.class, features);
+        return super.getPort(new QName("http://tracktime.zetweb.com.ua/ws-test/", "TimeCatcherEndpoint"), TimeCatcherInterface.class, features);
     }
 
     private static URL __getWsdlLocation() {

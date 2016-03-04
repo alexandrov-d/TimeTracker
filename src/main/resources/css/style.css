@@ -148,3 +148,6 @@
 .chart-horizontal-grid-lines {
     -fx-stroke: #565656;
 }
+.chart-vertical-grid-lines {
+    -fx-stroke: #444444;
+}

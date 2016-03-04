@@ -18,7 +18,7 @@ import ua.com.zetweb.tracktime.ws.types.TaskList;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "TimeCatcherInterface", targetNamespace = "http://tracktime.zetweb.com.ua/ws/")
+@WebService(name = "TimeCatcherInterface", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
     ObjectFactory.class
@@ -33,9 +33,9 @@ public interface TimeCatcherInterface {
      *     returns boolean
      */
     @WebMethod(operationName = "CheckVersion", action = "http://tempuri.org/CheckVersion")
-    @WebResult(name = "CheckVersionOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "CheckVersionOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public boolean checkVersion(
-        @WebParam(name = "CheckVersionInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "CheckVersionInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         String input);
 
     /**
@@ -45,9 +45,9 @@ public interface TimeCatcherInterface {
      *     returns ua.com.zetweb.tracktime.ws.types.TaskList
      */
     @WebMethod(operationName = "GetTaskList", action = "http://tempuri.org/GetTaskList")
-    @WebResult(name = "GetTaskListOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "GetTaskListOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public TaskList getTaskList(
-        @WebParam(name = "GetTaskListInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "GetTaskListInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         String input);
 
     /**
@@ -57,9 +57,9 @@ public interface TimeCatcherInterface {
      *     returns int
      */
     @WebMethod(operationName = "StartTaskExec", action = "http://tempuri.org/StartTaskExec")
-    @WebResult(name = "StartTaskExecOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "StartTaskExecOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public int startTaskExec(
-        @WebParam(name = "StartTaskExecInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "StartTaskExecInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         TaskId input);
 
     /**
@@ -69,9 +69,9 @@ public interface TimeCatcherInterface {
      *     returns int
      */
     @WebMethod(operationName = "UpdateTaskExecTime", action = "http://tempuri.org/UpdateTaskExecTime")
-    @WebResult(name = "UpdateTaskExecTimeOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "UpdateTaskExecTimeOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public int updateTaskExecTime(
-        @WebParam(name = "UpdateTaskExecTimeInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "UpdateTaskExecTimeInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         TaskId input);
 
     /**
@@ -81,9 +81,9 @@ public interface TimeCatcherInterface {
      *     returns int
      */
     @WebMethod(operationName = "StopTaskExec", action = "http://tempuri.org/StopTaskExec")
-    @WebResult(name = "StopTaskExecOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "StopTaskExecOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public int stopTaskExec(
-        @WebParam(name = "StopTaskExecInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "StopTaskExecInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         TaskId input);
 
     /**
@@ -93,9 +93,9 @@ public interface TimeCatcherInterface {
      *     returns int
      */
     @WebMethod(operationName = "FinishTask", action = "http://tempuri.org/FinishTask")
-    @WebResult(name = "FinishTaskOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "output")
+    @WebResult(name = "FinishTaskOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")
     public int finishTask(
-        @WebParam(name = "FinishTaskInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws/types/", partName = "input")
+        @WebParam(name = "FinishTaskInput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "input")
         TaskId input);
 
 }
