@@ -38,6 +38,8 @@ public class WorkingBitListWrapper {
 			}else{
 				workingBitList.add(workingBit);
 			}
+		}else{
+			insert(workingBit);
 		}
 	}
 	

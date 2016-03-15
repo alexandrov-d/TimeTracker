@@ -1,4 +1,4 @@
-package com.ada.timetracker.util;
+package com.ada.timetracker.model;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -14,9 +14,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.ada.timetracker.model.WorkingBit;
-import com.ada.timetracker.model.WorkingBitListWrapper;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -26,23 +23,38 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class WorkingBitManager {
 	
-	private File file;
+	private static File file = new File("my-time.xml");;
+	
+	private static WorkingBitManager instance;
+	
+	private static final SimpleDateFormat bitHourFormat = new SimpleDateFormat("yyyy-MM-dd:H");
 	
 	private WorkingBitListWrapper bitsWrapper;
 	
-	
-	public WorkingBitManager(File file){
-		
-		this.file = file;
+	private WorkingBitManager(){
 		
 		bitsWrapper = new WorkingBitListWrapper();
+		
 		
 		if ( file.exists() ){
 			loadWorkingBitListFromFile();
 		}else{
 			saveWorkingBitList();
-		}		
+		}	
+	};
+	
+	public static WorkingBitManager getInstance(){
+		if (instance == null){
+			return new WorkingBitManager();
+		}else{
+			return instance;
+		}
 	}
+	
+	public static void setFileName(File f){
+		file = f;
+	}
+
 	
 	/**
 	 * Saves the current Working Bit data to the specified file.
@@ -53,10 +65,7 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	        //bitsWrapper = new WorkingBitListWrapper();
-	       // wrapper.setWorkingBitList(workingBitList);
 
-	        // Marshalling and saving XML to the file.
 	        m.marshal(bitsWrapper, file);
 
 	    } catch (Exception e) { 
@@ -68,11 +77,7 @@ public class WorkingBitManager {
 	        alert.showAndWait();
 	    }
 	}
-	
-/*	public List<WorkingBit> getWorkingBitList(){
-		return workingBitList;
-	}*/
-	
+
 	
 	/**
 	 * Loads working bits data from the specified file. 
@@ -104,7 +109,7 @@ public class WorkingBitManager {
 	 * @param workingBit
 	 * @param working is we were working from the last adding
 	 */
-	public void addWorkingBitToFile(WorkingBit workingBit, Boolean working) {
+	public void addWorkingBitToFile(WorkingBit workingBit, boolean b) {
 		
 	    try {
 	        JAXBContext context = JAXBContext.newInstance(WorkingBitListWrapper.class);
@@ -112,11 +117,11 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	        if ( working ){
-	        	 bitsWrapper.add(workingBit);
-	        }else{
+	    //    if ( working ){
+	        	bitsWrapper.add(workingBit);
+	       /* }else{
 	        	bitsWrapper.insert(workingBit);
-	        }
+	        }*/
 	       
 	        m.marshal(bitsWrapper, file);
 
@@ -145,7 +150,6 @@ public class WorkingBitManager {
 		
 		List<WorkingBit> bits = bitsWrapper.getWorkingBitList();
 		
-		SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd:H");
 		SimpleDateFormat formater = new SimpleDateFormat("MM/dd");
 	
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -155,7 +159,7 @@ public class WorkingBitManager {
 	
 		for (WorkingBit bit : bits){
 			try {
-				d = parser.parse(bit.getHour());
+				d = bitHourFormat.parse(bit.getHour());
 				calendar.setTime(d);
 				String day =  formater.format(calendar.getTime());
 				dayMap.merge(day, bit.getTime()/60.0, Double::sum);
@@ -164,8 +168,16 @@ public class WorkingBitManager {
 				e.printStackTrace();
 			}
 		}
-
 		return dayMap;
 	}
+	
+	/**
+	 * @return current hour in WorkingBit format '
+	 */
+	public static String getCurrentHour() {
+		return bitHourFormat.format(new Date());
+	}
+	
+
 
 }

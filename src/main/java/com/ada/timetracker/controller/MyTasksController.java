@@ -10,9 +10,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.ada.timetracker.App;
 import com.ada.timetracker.TimeCatcherClient;
 import com.ada.timetracker.model.Task;
 import com.ada.timetracker.model.TaskList;
+import com.ada.timetracker.model.WorkingBit;
+import com.ada.timetracker.model.WorkingBitManager;
 import com.ada.timetracker.util.TimeHelper;
 
 import javafx.application.Platform;
@@ -157,6 +160,7 @@ public class MyTasksController {
 		
 			textFlow.setLayoutY(50);
 			timeLabel.setLayoutY(22);
+			AnchorPane.setRightAnchor(timeLabel, 20.0);
 			timeLabel.getStyleClass().add("time-label");
 			
 			//Add priority pane 
@@ -216,11 +220,13 @@ public class MyTasksController {
      */
     @FXML
     private void handleStartStopTask() {
+
     	if ( !working ){
     		startTask();
     	}else{
     		stopTask();
     	}
+    	App.getInstance().updateTray();
     }
     
     @FXML
@@ -239,7 +245,7 @@ public class MyTasksController {
     }
 
     private void startTask(){
-
+    	
     	if ( selectedTaskId !=0 && client.startTaskExec(selectedTaskId) ){
     		working = true;
     		startStopTaskButton.getStyleClass().add("stop");
@@ -332,11 +338,23 @@ public class MyTasksController {
     private void startTimer(){
     	timePassed = TimeHelper.stringToSeconds(taskTimeLabel.getText());
     	int startTime = timePassed;
+
+    	Task currentTask = TaskList.getById(selectedTaskId);
     	taskWorkingTimer =  () ->{
 			Platform.runLater( () -> taskTimeLabel.setText(TimeHelper.secondsToString(++timePassed)) );
+
+			int taskWorkingTime  = timePassed - startTime;
 			//Update task time on server every 120 seconds
-			if ( (timePassed - startTime) % 120  == 0 ){
+			if ( taskWorkingTime % 120  == 0 ){
 				TaskList.updateTaskTime(selectedTaskId);
+			}
+
+			if ( taskWorkingTime % 60  == 0  && taskWorkingTime != 0){
+				WorkingBit wb = new WorkingBit(WorkingBitManager.getCurrentHour(), selectedTaskId, currentTask.getTitle(), currentTask.getProjectTitle(), 1);
+				WorkingBitManager manager = WorkingBitManager.getInstance();
+				
+				manager.addWorkingBitToFile(wb, taskWorkingTime == 10);
+				
 			}
 		};
 		taskTimer = scheduler.scheduleWithFixedDelay( taskWorkingTimer , 1, 1, TimeUnit.SECONDS);

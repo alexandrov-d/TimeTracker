@@ -9,10 +9,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
+import com.ada.timetracker.model.WorkingBitManager;
 import com.ada.timetracker.util.TimeHelper;
-import com.ada.timetracker.util.WorkingBitManager;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,6 +33,11 @@ import javafx.scene.control.Tooltip;
 public class WorkingChartController {
 	
 	private final static String DATE_FORMAT = "MM/dd";
+	private static final String TOOLTIP = "tooltip";
+	
+	private static ScheduledFuture<?> taskListTimer;
+	
+	  
 	@FXML
     private BarChart<String, Number> barChart;
 
@@ -36,8 +47,11 @@ public class WorkingChartController {
     @FXML
     private NumberAxis yAxis;
     
-
+	private  Runnable reinitialize;
     private ObservableList<String> dayNumbers = FXCollections.observableArrayList();
+    private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private XYChart.Series<String, Number> series;
+    private static final int CHART_DAY_RANGE = 20;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -46,7 +60,7 @@ public class WorkingChartController {
     @FXML
     private void initialize() {
      
-    	List<Date> dates = TimeHelper.getDaysRange(30);
+    	List<Date> dates = TimeHelper.getDaysRange(CHART_DAY_RANGE);
     	DateFormat formater = new SimpleDateFormat(DATE_FORMAT);
     	
     	for ( int i = dates.size() -1; i >= 0; i--){
@@ -58,13 +72,20 @@ public class WorkingChartController {
      
         barChart.setLegendVisible(false);
  
-        yAxis.setLabel("Hours");
+        yAxis.setLabel("Часы");
      
-        
         setWorkingBitData();
         
+        //Schedule reinitialize every  minute
+        if (taskListTimer == null ){
+        	reinitialize = ()-> {
+				Platform.runLater( () -> updateChart());
+			};
+        	taskListTimer = scheduler.scheduleWithFixedDelay( reinitialize , 60, 60, TimeUnit.SECONDS);
+        }
     }
     
+  
     
 
     /**
@@ -74,10 +95,10 @@ public class WorkingChartController {
      */
     private void setWorkingBitData() {
     	
-    	HashMap<String, Double> map = new WorkingBitManager(new File("test/by_day_sort.xml")).getWorkingBitListByDays();
+    	HashMap<String, Double> map = WorkingBitManager.getInstance().getWorkingBitListByDays();
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        
+        series = new XYChart.Series<>();
+ 
         Double value;
         // Create a XYChart.Data object for each month. Add it to the series.
         for (int i = 0; i < dayNumbers.size(); i++) {
@@ -100,7 +121,7 @@ public class WorkingChartController {
                  Tooltip tooltip = new Tooltip();
                  tooltip.setText(TimeHelper.doubleHoursToTime(data.getYValue().doubleValue()));
                  Tooltip.install(data.getNode(), tooltip); 
-                 
+                 data.getNode().getProperties().put(TOOLTIP, tooltip);
                  try {
 					calendar.setTime( dateParser.parse( year + "/" + data.getXValue() )) ;
 				
@@ -113,11 +134,30 @@ public class WorkingChartController {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-                
-              
-               
             }
-       }
+        }
     }
+    
+    public void updateChart(){
+    	
+    	DateFormat formater = new SimpleDateFormat(DATE_FORMAT);
+    	String today = formater.format(new Date());
+    	
+    	ObservableList<XYChart.Data<String, Number>> list = barChart.getData().get(0).getData();
+    	XYChart.Data<String, Number> data = list.get( list.size()-1 );
 
+    	if ( data.getXValue().equals(today)){
+    		Double hours = WorkingBitManager.getInstance().getWorkingBitListByDays().get(today);
+    		if ( hours == null){
+    			hours = 0.00;
+    		}
+    		data.setYValue(hours);
+    		Tooltip tooltip = (Tooltip) data.getNode().getProperties().get(TOOLTIP);
+            tooltip.setText(TimeHelper.doubleHoursToTime(hours));
+    	}else{
+    		series.getData().clear();
+    		barChart.getData().clear();
+    		setWorkingBitData();
+    	}
+    }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workingBitList>
+    <workingBit>
+        <hour>2016-03-12:12</hour>
+        <taskId>100</taskId>
+        <taskProject>Простой проэкт</taskProject>
+        <taskTitle>Простая  задача</taskTitle>
+        <time>15</time>
+    </workingBit>
+    <workingBit>
+        <hour>2016-03-12:12</hour>
+        <taskId>101</taskId>
+        <taskProject>Простой проэкт</taskProject>
+        <taskTitle>Сложная  задача</taskTitle>
+        <time>10</time>
+    </workingBit>
+    <workingBit>
+        <hour>2016-03-12:13</hour>
+        <taskId>101</taskId>
+        <taskProject>Простой проэкт</taskProject>
+        <taskTitle>Сложная  задача</taskTitle>
+        <time>10</time>
+    </workingBit>
+    <workingBit>
+        <hour>2016-03-12:13</hour>
+        <taskId>101</taskId>
+        <taskProject>Простой проэкт</taskProject>
+        <taskTitle>Сложная  задача</taskTitle>
+        <time>1</time>
+    </workingBit>
+    <workingBit>
+        <hour>2016-03-12:13</hour>
+        <taskId>100</taskId>
+        <taskProject>Простой проэкт</taskProject>
+        <taskTitle>Простая  задача</taskTitle>
+        <time>20</time>
+    </workingBit>
+</workingBitList>

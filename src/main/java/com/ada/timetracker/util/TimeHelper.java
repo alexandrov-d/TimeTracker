@@ -39,11 +39,15 @@ public class TimeHelper {
 	}
 	
 	public static String doubleHoursToTime(Double hours){
+	
 		int h = hours.intValue();
 		long min = Math.round(hours%1*0.6*100);
 		String ms = String.valueOf(min);
 		if ( min < 10){
 			ms = "0" + min;
+		}else if(min == 60){
+			h++;
+			ms = "00";
 		}
 		return h + ":" + ms;
 	}

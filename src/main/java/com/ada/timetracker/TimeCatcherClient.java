@@ -75,6 +75,11 @@ public class TimeCatcherClient implements java.util.Observer{
 		return i != -1 ? true : false;
 	}
 	
+	/**
+	 * Update task time on server
+	 * @param taskId
+	 * @return 
+	 */
 	public boolean updateTaskExecTime( long taskId ){
 		clientTask.setTaskId(taskId);
 		int i = server.updateTaskExecTime(clientTask);

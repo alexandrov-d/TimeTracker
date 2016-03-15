@@ -63,9 +63,9 @@ public class WorkingBit implements Comparable<WorkingBit>{
 	public int compareTo(WorkingBit wb) {
 		
 		boolean hourEq = this.hour.equals(wb.hour);
-		boolean titleEq = this.taskId== wb.taskId;
+		boolean idEq = this.taskId == wb.taskId;
 		
-		if ( hourEq && titleEq ){
+		if ( hourEq && idEq ){
 			return 0;
 		}else{
 			return 1;

@@ -1,22 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" 
-	stylesheets="@../../../../../css/style.css" fx:controller="com.ada.timetracker.controller.WorkingChartController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../css/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ada.timetracker.controller.WorkingChartController">
    <children>
-      <BarChart layoutX="31.0" layoutY="-14.0" prefHeight="400.0" prefWidth="600.0"  fx:id="barChart"
-      	AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <xAxis>
-          <CategoryAxis  fx:id="xAxis" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis  fx:id="yAxis" side="LEFT" />
-        </yAxis>
-      </BarChart>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="14.0" layoutY="60.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane maxWidth="165.0" minHeight="0.0" minWidth="160.0" prefHeight="160.0" prefWidth="165.0">
+               <children>
+                  <GridPane layoutX="-30.0" layoutY="65.0" prefHeight="398.0" prefWidth="160.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="75.0" prefWidth="160.0" text="Отработано" textOverrun="CENTER_WORD_ELLIPSIS" GridPane.hgrow="ALWAYS">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="94.0" prefWidth="160.0" text="Сегодня" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="322.0" text="0:25" GridPane.rowIndex="2" />
+                        <Label alignment="BOTTOM_CENTER" prefHeight="86.0" prefWidth="155.0" text="На этой неделе" GridPane.rowIndex="3" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="357.0" text="20:45" GridPane.rowIndex="4" />
+                        <Label alignment="BOTTOM_CENTER" prefHeight="51.0" prefWidth="209.0" text="На прошлой неделе" GridPane.rowIndex="5" />
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="295.0" text="15:30" GridPane.rowIndex="6" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <BarChart fx:id="barChart" prefHeight="400.0" prefWidth="439.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="yAxis" side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

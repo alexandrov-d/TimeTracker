@@ -6,13 +6,11 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 
 import com.ada.timetracker.controller.MyTasksController;
 import com.ada.timetracker.controller.OptionsDialogController;
-import com.ada.timetracker.controller.WorkingChartController;
 import com.ada.timetracker.util.AppInstanceManager;
 import com.ada.timetracker.util.Log;
 
@@ -40,7 +38,7 @@ public class App extends Application {
 	private static App instance = null;
 
 	private Stage primaryStage;
-	
+	private TrayIcon trayIcon;
 	private Stage dialogStage;
 	OptionsDialogController dialogController;
 	
@@ -92,6 +90,8 @@ public class App extends Application {
 
 		initLayout();
 	
+		addAppToTray();
+		
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
@@ -104,7 +104,7 @@ public class App extends Application {
 							System.exit(0);
 						} else {
 							primaryStage.hide();
-						    javax.swing.SwingUtilities.invokeLater(()->addAppToTray());
+						//    javax.swing.SwingUtilities.invokeLater(()->addAppToTray());
 						}
 					}
 				});
@@ -196,10 +196,14 @@ public class App extends Application {
 	public static App getInstance() {
 		return instance;
 	}
-
+	
+	public void updateTray(){
+		addAppToTray();
+	}
+	
 	private void addAppToTray() {
 		try {
-			//java.awt.Toolkit.getDefaultToolkit();
+			SystemTray.getSystemTray().remove(trayIcon);
 			SystemTray systemTray = SystemTray.getSystemTray();
 			String imagePath;
 
@@ -212,7 +216,7 @@ public class App extends Application {
 			URL url = getClass().getResource(imagePath);
 			java.awt.Image image = ImageIO.read(url);
 
-			TrayIcon trayIcon = new java.awt.TrayIcon(image, "TimeTracker");
+			trayIcon = new java.awt.TrayIcon(image, "TimeTracker");
 			
 			//open from try menu item
 			MenuItem openItem = new java.awt.MenuItem("Показать");
@@ -251,7 +255,7 @@ public class App extends Application {
 	}
 
 	private void showStage(TrayIcon trayIcon) {
-		SystemTray.getSystemTray().remove(trayIcon);
+		//SystemTray.getSystemTray().remove(trayIcon);
 		primaryStage.show();
 		primaryStage.toFront();
 	}
