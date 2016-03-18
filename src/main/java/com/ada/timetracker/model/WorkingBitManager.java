@@ -1,7 +1,6 @@
 package com.ada.timetracker.model;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -117,16 +116,10 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	    //    if ( working ){
-	        	bitsWrapper.add(workingBit);
-	       /* }else{
-	        	bitsWrapper.insert(workingBit);
-	        }*/
-	       
+        	bitsWrapper.add(workingBit);
+        	
 	        m.marshal(bitsWrapper, file);
 
-	        // Save the file path to the registry.
-	     //   setPersonFilePath(file);
 	    } catch (Exception e) { 
 	    	e.printStackTrace();
 	        Alert alert = new Alert(AlertType.ERROR);
@@ -177,6 +170,55 @@ public class WorkingBitManager {
 	public static String getCurrentHour() {
 		return bitHourFormat.format(new Date());
 	}
+
+	/**
+	 * Get short statistic of working hours
+	 * @return Hours {today => ..., thisWeek =>..., lastWeek => ...  }
+	 */
+	public HashMap<String, Double> getStatistic() {
+		List<WorkingBit> bits = bitsWrapper.getWorkingBitList();
+		
+		Calendar calendar = new GregorianCalendar();
+		//Today
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date  today = calendar.getTime();
+	    
+	    //First day of this week
+	    calendar.add(Calendar.DAY_OF_WEEK, -calendar.get(Calendar.DAY_OF_WEEK)+2);
+	    Date weekStart = calendar.getTime();
+		
+
+	    //Get first day of last week
+	    calendar.add(Calendar.DAY_OF_WEEK, -7);
+	    Date lastWeekStart = calendar.getTime();
+
+		Date date;
+		HashMap<String, Double> statistic = new HashMap<>();
+	
+		try {
+			for (WorkingBit bit : bits){
+				date = bitHourFormat.parse(bit.getHour());
+				if ( date.after(today) ){
+					statistic.merge("today", bit.getTime()/60.0, Double::sum);
+				}
+				if ( date.after(weekStart)){
+					statistic.merge("thisWeek", bit.getTime()/60.0, Double::sum);
+					
+				}
+				if ( date.after(lastWeekStart) && date.before(weekStart)){
+					statistic.merge("lastWeek", bit.getTime()/60.0, Double::sum);
+				}
+
+			}
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		return statistic;
+	}
+	
 	
 
 

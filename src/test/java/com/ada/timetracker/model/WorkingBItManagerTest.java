@@ -7,12 +7,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -34,6 +34,88 @@ public class WorkingBItManagerTest {
 			manager.addWorkingBitToFile(wb, true);
 		}
 	}*/
+	@Test 
+	public void TestgetWorkingBitSummary(){
+		
+		File file = new File("my-time-test.xml");
+		file.delete();
+		WorkingBitManager.setFileName(file);
+		WorkingBitManager manager = WorkingBitManager.getInstance();
+		
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		
+		String today = dateFormat.format(date);
+	    
+	    Calendar calendar = new GregorianCalendar();
+	    int todayDayNumber = calendar.get(Calendar.DAY_OF_WEEK);
+	    
+	    //First day of this week
+	    calendar.add(Calendar.DAY_OF_WEEK, -calendar.get(Calendar.DAY_OF_WEEK)+2);
+		String weekStart = dateFormat.format(calendar.getTime());
+		
+	    //Some day of this week if today not monday
+	    String thisWeekDay = "";
+
+	    if ( todayDayNumber > 3){
+		    calendar.add(Calendar.DAY_OF_WEEK, 1);
+		    thisWeekDay = dateFormat.format(calendar.getTime());
+	    }
+
+	    //Get first day of last week
+	    calendar.add(Calendar.DAY_OF_WEEK, -7);
+	    String lastWeekStart = dateFormat.format(calendar.getTime());
+	
+	    //Get first day of last week + 2
+	    calendar.add(Calendar.DAY_OF_WEEK, 2);
+	    String lastWeekDay = dateFormat.format(calendar.getTime());
+
+	    
+	    //Populate last week ours
+	    WorkingBit wb = new WorkingBit(lastWeekStart + ":10", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 50);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit(lastWeekStart + ":13", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 25);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit(lastWeekDay + ":16", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 30);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit(lastWeekDay + ":18", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 45);
+	    manager.addWorkingBitToFile(wb, true);
+	    
+	    //Populate this week hours
+	    wb = new WorkingBit(weekStart + ":9", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 50);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit(weekStart + ":14", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 35);
+	    manager.addWorkingBitToFile(wb, true);
+	    
+	    if (todayDayNumber > 3){
+	       	wb = new WorkingBit( thisWeekDay + ":10", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 30);
+	 	    manager.addWorkingBitToFile(wb, true);
+	 	    wb = new WorkingBit( thisWeekDay + ":18", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 45);
+	 	    manager.addWorkingBitToFile(wb, true);
+	 	  
+	    }
+	    if (todayDayNumber > 2){
+    	    wb = new WorkingBit( today + ":10", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 20);
+	 	    manager.addWorkingBitToFile(wb, true);
+	 	    wb = new WorkingBit( today + ":18", 100, "TestgetWorkingBitSummary", "WorkingBItManagerTest", 15);
+	 	    manager.addWorkingBitToFile(wb, true);
+	    }
+	 
+	    assertEquals( (50 + 25 + 30 + 45)/60.00, manager.getStatistic().get("lastWeek"), 0.01);
+	    
+	    if (todayDayNumber > 3 ){
+	    	assertEquals( ( 50 + 35 + 30 + 45 + 20 + 15 )/60.00, manager.getStatistic().get("thisWeek"), 0.01);
+	    	assertEquals( ( 20 + 15 )/60.00, manager.getStatistic().get("today"), 0.01);
+	    }else if ( todayDayNumber == 3 ){
+	    	assertEquals( ( 50 + 35 )/60.00, manager.getStatistic().get("thisWeek"), 0.01);
+	    	assertEquals( ( 20 + 15 )/60.00, manager.getStatistic().get("today"), 0.01);
+	    }else {
+	    	assertEquals( ( 50 + 35 )/60.00, manager.getStatistic().get("thisWeek"), 0.01);
+	    	assertEquals( ( 50 + 35 )/60.00, manager.getStatistic().get("today"), 0.01);
+	    }
+		
+	}
 	
 	//@Test
 	public void testAddWorkingBitsToFile(){
@@ -85,6 +167,7 @@ public class WorkingBItManagerTest {
 		WorkingBit wb = new WorkingBit("2016-6-28:1", id, title, "Project add NEW", time);
 		
 		File file = new File(XML_FILE_ADD);
+		file.delete();
 		WorkingBitManager.setFileName(file);
 		
 		WorkingBitManager manager = WorkingBitManager.getInstance();
@@ -101,7 +184,7 @@ public class WorkingBItManagerTest {
 	public void TestAddTimeToLastWorkingBitWithDifferentId(){
 
 		File file = new File(XML_FILE_ADD);
-		
+		file.delete();
 		String title = "Test Add working bit time Differnt Id: ";
 		String project = "Project Add Time Diff ID" ;
 		int time = 500;
@@ -187,7 +270,7 @@ public class WorkingBItManagerTest {
 		WorkingBitManager manager = WorkingBitManager.getInstance();
 		GregorianCalendar calendar = new GregorianCalendar(2016, 1, 1);
 
-		SimpleDateFormat hourF= new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat hourF = new SimpleDateFormat("yyyy-MM-dd");
 		
 		int i = 0 ;
 	
@@ -217,7 +300,7 @@ public class WorkingBItManagerTest {
 		
 		HashMap<String, Double> minutesPerDay = manager.getWorkingBitListByDays();
 		//assertFalse(true);
-		assertEquals(totalForADay, minutesPerDay.get("02/09").doubleValue());
+		assertEquals(totalForADay, minutesPerDay.get("02/09").doubleValue(), 0.001);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.ada.timetracker.controller;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -28,6 +26,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 
 public class WorkingChartController {
@@ -36,23 +35,23 @@ public class WorkingChartController {
 	private static final String TOOLTIP = "tooltip";
 	
 	private static ScheduledFuture<?> taskListTimer;
-	
 	  
-	@FXML
-    private BarChart<String, Number> barChart;
-
-    @FXML
-    private CategoryAxis xAxis;
+	@FXML private BarChart<String, Number> barChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private Label hoursTodayLabel; 
+    @FXML private Label hoursWeekLabel; 
+    @FXML private Label hoursLastWeekLabel; 
     
-    @FXML
-    private NumberAxis yAxis;
     
 	private  Runnable reinitialize;
     private ObservableList<String> dayNumbers = FXCollections.observableArrayList();
     private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private XYChart.Series<String, Number> series;
     private static final int CHART_DAY_RANGE = 20;
-
+ 
+    private static WorkingChartController instance;
+ 
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -60,6 +59,7 @@ public class WorkingChartController {
     @FXML
     private void initialize() {
      
+    	instance = this;
     	List<Date> dates = TimeHelper.getDaysRange(CHART_DAY_RANGE);
     	DateFormat formater = new SimpleDateFormat(DATE_FORMAT);
     	
@@ -77,12 +77,12 @@ public class WorkingChartController {
         setWorkingBitData();
         
         //Schedule reinitialize every  minute
-        if (taskListTimer == null ){
+     /*   if (taskListTimer == null ){
         	reinitialize = ()-> {
-				Platform.runLater( () -> updateChart());
+				Platform.runLater( () -> updateData());
 			};
-        	taskListTimer = scheduler.scheduleWithFixedDelay( reinitialize , 60, 60, TimeUnit.SECONDS);
-        }
+        	taskListTimer = scheduler.scheduleWithFixedDelay( reinitialize , 0, 60, TimeUnit.SECONDS);
+        }*/
     }
     
   
@@ -94,8 +94,12 @@ public class WorkingChartController {
      * @param persons
      */
     private void setWorkingBitData() {
-    	
-    	HashMap<String, Double> map = WorkingBitManager.getInstance().getWorkingBitListByDays();
+    	setChartData();
+    	setSummaryData();
+    }
+
+	private void setChartData() {
+		HashMap<String, Double> map = WorkingBitManager.getInstance().getWorkingBitListByDays();
 
         series = new XYChart.Series<>();
  
@@ -136,9 +140,20 @@ public class WorkingChartController {
 				}
             }
         }
-    }
+	}
+	
+	private void setSummaryData(){
+		HashMap<String, Double> statistic = WorkingBitManager.getInstance().getStatistic();
+		hoursTodayLabel.setText( TimeHelper.doubleHoursToTime(statistic.get("today")) );
+		hoursWeekLabel.setText( TimeHelper.doubleHoursToTime(statistic.get("thisWeek")) );
+		hoursLastWeekLabel.setText( TimeHelper.doubleHoursToTime(statistic.get("lastWeek")) );
+	}
     
-    public void updateChart(){
+	public static void update(){
+		instance.updateData();
+	}
+	
+    private void updateData(){
     	
     	DateFormat formater = new SimpleDateFormat(DATE_FORMAT);
     	String today = formater.format(new Date());
@@ -159,5 +174,6 @@ public class WorkingChartController {
     		barChart.getData().clear();
     		setWorkingBitData();
     	}
+    	setSummaryData();
     }
 }

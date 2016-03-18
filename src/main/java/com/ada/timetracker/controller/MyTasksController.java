@@ -349,11 +349,15 @@ public class MyTasksController {
 				TaskList.updateTaskTime(selectedTaskId);
 			}
 
+			//Update every minute
 			if ( taskWorkingTime % 60  == 0  && taskWorkingTime != 0){
 				WorkingBit wb = new WorkingBit(WorkingBitManager.getCurrentHour(), selectedTaskId, currentTask.getTitle(), currentTask.getProjectTitle(), 1);
 				WorkingBitManager manager = WorkingBitManager.getInstance();
 				
 				manager.addWorkingBitToFile(wb, taskWorkingTime == 10);
+				
+				Platform.runLater( () -> WorkingChartController.update());
+				
 				
 			}
 		};

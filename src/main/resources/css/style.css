@@ -104,7 +104,10 @@
 .link{
     -fx-background-color: green;
 }
-
+.title{
+	-fx-text-fill: cornsilk;
+	
+}
 
 .hyperlink{
 	-fx-text-fill: #3d8fc9;

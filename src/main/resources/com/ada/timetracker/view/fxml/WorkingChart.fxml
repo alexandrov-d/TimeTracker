@@ -37,11 +37,11 @@
                            </font>
                         </Label>
                         <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="94.0" prefWidth="160.0" text="Сегодня" GridPane.rowIndex="1" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="322.0" text="0:25" GridPane.rowIndex="2" />
+                        <Label fx:id="hoursTodayLabel" alignment="CENTER" prefHeight="19.0" prefWidth="322.0" styleClass="time-label" text="0:00" GridPane.rowIndex="2" />
                         <Label alignment="BOTTOM_CENTER" prefHeight="86.0" prefWidth="155.0" text="На этой неделе" GridPane.rowIndex="3" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="357.0" text="20:45" GridPane.rowIndex="4" />
+                        <Label fx:id="hoursWeekLabel" alignment="CENTER" prefHeight="19.0" prefWidth="357.0" styleClass="time-label" text="0:00" GridPane.rowIndex="4" />
                         <Label alignment="BOTTOM_CENTER" prefHeight="51.0" prefWidth="209.0" text="На прошлой неделе" GridPane.rowIndex="5" />
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="295.0" text="15:30" GridPane.rowIndex="6" />
+                        <Label fx:id="hoursLastWeekLabel" alignment="CENTER" prefHeight="19.0" prefWidth="295.0" styleClass="time-label" text="0:00" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
                </children>
