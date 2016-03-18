@@ -1,6 +1,6 @@
 package com.ada.timetracker.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -34,8 +34,35 @@ public class WorkingBItManagerTest {
 			manager.addWorkingBitToFile(wb, true);
 		}
 	}*/
-	@Test 
-	public void TestgetWorkingBitSummary(){
+	
+	@Test
+	public void TestDeleteOldBits(){
+		File file = new File("my-time-test.xml");
+		file.delete();
+		WorkingBitManager.setFileName(file);
+		WorkingBitManager manager = WorkingBitManager.getInstance();
+		WorkingBit wb;
+		wb = new WorkingBit("2016-01-27:13", 100, "TestDeleteOldBits", "WorkingBItManagerTest", 25);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit("2016-02-10:13", 100, "TestDeleteOldBits", "WorkingBItManagerTest", 25);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit("2016-02-25:10", 100, "TestDeleteOldBits", "WorkingBItManagerTest", 30);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit("2016-02-25:11", 100, "TestDeleteOldBits", "WorkingBItManagerTest", 25);
+	    manager.addWorkingBitToFile(wb, true);
+	    wb = new WorkingBit("2016-03-17:18", 100, "TestDeleteOldBits", "WorkingBItManagerTest", 45);
+	    manager.addWorkingBitToFile(wb, true);
+	    
+	    manager.deleteOlderBits(30);
+	    HashMap<String, Double> bits = manager.getWorkingBitListByDays();
+	   
+	    assertNull(bits.get("01/27"));
+	    assertNull(bits.get("02/10"));
+	    assertEquals( 55/60.00, bits.get("02/25"), 0.01);
+	    assertEquals( 45/60.00, bits.get("03/17"), 0.01);
+	}
+	//@Test 
+	public void TestGetWorkingBitSummary(){
 		
 		File file = new File("my-time-test.xml");
 		file.delete();

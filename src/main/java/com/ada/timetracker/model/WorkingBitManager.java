@@ -3,6 +3,7 @@ package com.ada.timetracker.model;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -37,9 +38,10 @@ public class WorkingBitManager {
 		
 		if ( file.exists() ){
 			loadWorkingBitListFromFile();
-		}else{
+			deleteOlderBits(20);
 			saveWorkingBitList();
 		}	
+		
 	};
 	
 	public static WorkingBitManager getInstance(){
@@ -66,6 +68,7 @@ public class WorkingBitManager {
 
 
 	        m.marshal(bitsWrapper, file);
+	        
 
 	    } catch (Exception e) { 
 	    	e.printStackTrace();
@@ -218,8 +221,34 @@ public class WorkingBitManager {
 		}
 		return statistic;
 	}
-	
-	
 
-
+	/**
+	 * Delete bits that is older than days
+	 * @param days 
+	 */
+	public void deleteOlderBits(int days) {
+		List<WorkingBit> bitList = bitsWrapper.getWorkingBitList();
+	    Calendar calendar = new GregorianCalendar();
+	    calendar.add(Calendar.DAY_OF_YEAR, - days);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		
+		List<WorkingBit> newBitList = new ArrayList<>();
+ 		try {
+			for( WorkingBit bit: bitList ){
+	
+				Date d = bitHourFormat.parse(bit.getHour());
+				if (!d.before(calendar.getTime())){
+					newBitList.add(bit);
+				}
+			}
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+ 		if ( !newBitList.isEmpty()){
+ 			bitsWrapper.setWorkingBitList(newBitList);
+ 			saveWorkingBitList();
+ 		}
+	}
 }

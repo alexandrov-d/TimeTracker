@@ -8,15 +8,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import com.ada.timetracker.model.WorkingBitManager;
 import com.ada.timetracker.util.TimeHelper;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,7 +29,7 @@ public class WorkingChartController {
 	private final static String DATE_FORMAT = "MM/dd";
 	private static final String TOOLTIP = "tooltip";
 	
-	private static ScheduledFuture<?> taskListTimer;
+	//private static ScheduledFuture<?> taskListTimer;
 	  
 	@FXML private BarChart<String, Number> barChart;
     @FXML private CategoryAxis xAxis;
@@ -44,9 +39,9 @@ public class WorkingChartController {
     @FXML private Label hoursLastWeekLabel; 
     
     
-	private  Runnable reinitialize;
+	//private  Runnable reinitialize;
     private ObservableList<String> dayNumbers = FXCollections.observableArrayList();
-    private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    //private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private XYChart.Series<String, Number> series;
     private static final int CHART_DAY_RANGE = 20;
  

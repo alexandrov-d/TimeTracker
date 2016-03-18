@@ -1,73 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workingBitList>
     <workingBit>
-        <hour>2016-03-08:10</hour>
+        <hour>2016-02-25:10</hour>
         <taskId>100</taskId>
         <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>50</time>
+        <taskTitle>TestDeleteOldBits</taskTitle>
+        <time>30</time>
     </workingBit>
     <workingBit>
-        <hour>2016-03-08:13</hour>
+        <hour>2016-02-25:11</hour>
         <taskId>100</taskId>
         <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
+        <taskTitle>TestDeleteOldBits</taskTitle>
         <time>25</time>
     </workingBit>
     <workingBit>
-        <hour>2016-03-10:16</hour>
+        <hour>2016-03-17:18</hour>
         <taskId>100</taskId>
         <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>30</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-10:18</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
+        <taskTitle>TestDeleteOldBits</taskTitle>
         <time>45</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-14:9</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>50</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-14:14</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>35</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-15:10</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>30</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-15:18</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>45</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-18:10</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>20</time>
-    </workingBit>
-    <workingBit>
-        <hour>2016-03-18:18</hour>
-        <taskId>100</taskId>
-        <taskProject>WorkingBItManagerTest</taskProject>
-        <taskTitle>TestgetWorkingBitSummary</taskTitle>
-        <time>15</time>
     </workingBit>
 </workingBitList>
