@@ -24,13 +24,6 @@ public class Task implements Comparable<Task> {
 
     private static String order = "priority";
 
-	/**
-     * Default constructor.
-     */
-  /*  public Task() {
-        this(null, null);
-    }
-*/
     public Task(long id, String title,  long projectId, String projectTitle, long priorityId, String priorityTitle, String  time, String dueDate) {
     	
     	this.id = new SimpleLongProperty( id ); 
@@ -167,6 +160,5 @@ public class Task implements Comparable<Task> {
 		
 		return result;
 	
-		
 	}
 }

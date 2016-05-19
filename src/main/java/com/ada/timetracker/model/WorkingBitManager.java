@@ -41,7 +41,6 @@ public class WorkingBitManager {
 			deleteOlderBits(20);
 			saveWorkingBitList();
 		}	
-		
 	};
 	
 	public static WorkingBitManager getInstance(){
@@ -66,9 +65,7 @@ public class WorkingBitManager {
 	        Marshaller m = context.createMarshaller();
 	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-
 	        m.marshal(bitsWrapper, file);
-	        
 
 	    } catch (Exception e) { 
 	    	e.printStackTrace();
@@ -92,7 +89,6 @@ public class WorkingBitManager {
 	        // Reading XML from the file and unmarshalling.
 	        bitsWrapper = (WorkingBitListWrapper) um.unmarshal(file);
 	        
-
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
 	        Alert alert = new Alert(AlertType.ERROR);
@@ -104,7 +100,6 @@ public class WorkingBitManager {
 	    }
 	}
 	
-
 	/**
 	 * Add the current working bit data to the specified file.
 	 * 

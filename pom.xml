@@ -4,7 +4,7 @@
 
 	<groupId>com.ada.timetracker</groupId>
 	<artifactId>TimeTracker</artifactId>
-	<version>0.6</version>
+	<version>0.9</version>
 	<packaging>jar</packaging>
 
 	<name>TimeTracker</name>

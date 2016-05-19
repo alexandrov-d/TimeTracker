@@ -3,19 +3,14 @@ package com.ada.timetracker.controller;
 import java.io.IOException;
 
 import com.ada.timetracker.App;
-import com.ada.timetracker.Config;
 import com.ada.timetracker.model.Task;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Tab;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * Main.fxml file controller
@@ -31,9 +26,6 @@ public class MainController {
 	
 	@FXML
 	private Tab statisticTab;
-
-	//@FXML
-	//private ToggleGroup toggleGroup;
 
 	/**
 	 * The constructor. The constructor is called before the initialize()
@@ -104,14 +96,6 @@ public class MainController {
 	        AnchorPane chart = (AnchorPane) loader.load();
 	        statisticTab.setContent(chart);
 	        
-	      //  Scene scene = new Scene(chart);
-	     //   dialogStage.setScene(scene);
-
-	        // Set the persons into the controller.
-	    //    WorkingChartController controller = loader.getController();
-	       // controller.setPersonData(personData);
-
-	     //   dialogStage.show();
 
 	    } catch (IOException e) {
 	        e.printStackTrace();

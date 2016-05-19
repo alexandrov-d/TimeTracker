@@ -29,7 +29,6 @@ public class WorkingChartController {
 	private final static String DATE_FORMAT = "MM/dd";
 	private static final String TOOLTIP = "tooltip";
 	
-	//private static ScheduledFuture<?> taskListTimer;
 	  
 	@FXML private BarChart<String, Number> barChart;
     @FXML private CategoryAxis xAxis;
@@ -41,7 +40,6 @@ public class WorkingChartController {
     
 	//private  Runnable reinitialize;
     private ObservableList<String> dayNumbers = FXCollections.observableArrayList();
-    //private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private XYChart.Series<String, Number> series;
     private static final int CHART_DAY_RANGE = 20;
  
@@ -70,14 +68,7 @@ public class WorkingChartController {
         yAxis.setLabel("Часы");
      
         setWorkingBitData();
-        
-        //Schedule reinitialize every  minute
-     /*   if (taskListTimer == null ){
-        	reinitialize = ()-> {
-				Platform.runLater( () -> updateData());
-			};
-        	taskListTimer = scheduler.scheduleWithFixedDelay( reinitialize , 0, 60, TimeUnit.SECONDS);
-        }*/
+  
     }
     
   

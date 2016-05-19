@@ -1,5 +1,5 @@
 
-package ua.com.zetweb.tracktime.ws.types;
+package ua.com.zetweb.tracktime.ws_test.types;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="task_id" type="{http://www.w3.org/2001/XMLSchema}unsignedInt"/>
- *         &lt;element name="api_key" type="{http://tracktime.zetweb.com.ua/ws/types/}ApiKey"/>
+ *         &lt;element name="api_key" type="{http://tracktime.zetweb.com.ua/ws-test/types/}ApiKey"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>

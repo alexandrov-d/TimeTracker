@@ -1,5 +1,5 @@
 
-package ua.com.zetweb.tracktime.ws;
+package ua.com.zetweb.tracktime.ws_test;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -7,9 +7,9 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import ua.com.zetweb.tracktime.ws.types.ObjectFactory;
-import ua.com.zetweb.tracktime.ws.types.TaskId;
-import ua.com.zetweb.tracktime.ws.types.TaskList;
+import ua.com.zetweb.tracktime.ws_test.types.ObjectFactory;
+import ua.com.zetweb.tracktime.ws_test.types.TaskId;
+import ua.com.zetweb.tracktime.ws_test.types.TaskList;
 
 
 /**
@@ -42,7 +42,7 @@ public interface TimeCatcherInterface {
      * 
      * @param input
      * @return
-     *     returns ua.com.zetweb.tracktime.ws.types.TaskList
+     *     returns ua.com.zetweb.tracktime.ws_test.types.TaskList
      */
     @WebMethod(operationName = "GetTaskList", action = "http://tempuri.org/GetTaskList")
     @WebResult(name = "GetTaskListOutput", targetNamespace = "http://tracktime.zetweb.com.ua/ws-test/types/", partName = "output")

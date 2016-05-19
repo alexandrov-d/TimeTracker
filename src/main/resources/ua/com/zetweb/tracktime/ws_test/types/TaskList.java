@@ -1,5 +1,5 @@
 
-package ua.com.zetweb.tracktime.ws.types;
+package ua.com.zetweb.tracktime.ws_test.types;
 
 import java.util.ArrayList;
 import java.util.List;

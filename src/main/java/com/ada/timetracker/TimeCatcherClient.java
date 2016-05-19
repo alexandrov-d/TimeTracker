@@ -4,10 +4,10 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ua.com.zetweb.tracktime.ws.TimeCatcherInterface;
-import ua.com.zetweb.tracktime.ws.TimeCatcherService;
-import ua.com.zetweb.tracktime.ws.types.TaskId;
-import ua.com.zetweb.tracktime.ws.types.TaskList;
+import ua.com.zetweb.tracktime.ws_test.TimeCatcherInterface;
+import ua.com.zetweb.tracktime.ws_test.TimeCatcherService;
+import ua.com.zetweb.tracktime.ws_test.types.TaskId;
+import ua.com.zetweb.tracktime.ws_test.types.TaskList;
 
 /**
  * Adapter for remote TimecCatcherService.

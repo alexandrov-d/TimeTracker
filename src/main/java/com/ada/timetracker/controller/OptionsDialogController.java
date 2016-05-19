@@ -2,7 +2,6 @@ package com.ada.timetracker.controller;
 
 
 
-import java.util.Properties;
 import java.util.prefs.Preferences;
 
 import com.ada.timetracker.Config;

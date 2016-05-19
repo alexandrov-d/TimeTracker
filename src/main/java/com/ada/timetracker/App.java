@@ -104,7 +104,6 @@ public class App extends Application {
 							System.exit(0);
 						} else {
 							primaryStage.hide();
-						//    javax.swing.SwingUtilities.invokeLater(()->addAppToTray());
 						}
 					}
 				});
@@ -119,8 +118,6 @@ public class App extends Application {
 			System.exit(0);
 		}
 	}
-
-	// private void
 
 	/**
 	 * Initializes the root layout.
@@ -255,7 +252,6 @@ public class App extends Application {
 	}
 
 	private void showStage(TrayIcon trayIcon) {
-		//SystemTray.getSystemTray().remove(trayIcon);
 		primaryStage.show();
 		primaryStage.toFront();
 	}

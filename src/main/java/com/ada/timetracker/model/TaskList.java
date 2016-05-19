@@ -59,9 +59,9 @@ public class TaskList {
 			myTaskList = new HashMap<>();
 		}
 		
-    	ua.com.zetweb.tracktime.ws.types.TaskList remoteTasks = client.getTaskList();
+    	ua.com.zetweb.tracktime.ws_test.types.TaskList remoteTasks = client.getTaskList();
     	
- 		for ( ua.com.zetweb.tracktime.ws.types.TaskList.Task task : remoteTasks.getTask() ) {
+ 		for ( ua.com.zetweb.tracktime.ws_test.types.TaskList.Task task : remoteTasks.getTask() ) {
  			//XMLGregorianCalendar  t = task.getDueDate().toString();
  			myTaskList.put(task.getId(), new Task( 
 				task.getId(),
