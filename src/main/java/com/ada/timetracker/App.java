@@ -141,7 +141,6 @@ public class App extends Application {
 		}else{
 			return showOptionsDialog();
 		}
-
 	}
 
 	/**
