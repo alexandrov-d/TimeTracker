@@ -71,8 +71,6 @@ public class WorkingChartController {
   
     }
     
-  
-    
 
     /**
      * Sets the persons to show the statistics for.
@@ -84,6 +82,9 @@ public class WorkingChartController {
     	setSummaryData();
     }
 
+    /**
+     * Populates chart with data
+     */
 	private void setChartData() {
 		HashMap<String, Double> map = WorkingBitManager.getInstance().getWorkingBitListByDays();
 
@@ -128,6 +129,9 @@ public class WorkingChartController {
         }
 	}
 	
+	/**
+	 * Populate summury labels with data
+	 */
 	private void setSummaryData(){
 		HashMap<String, Double> statistic = WorkingBitManager.getInstance().getStatistic();
 		hoursTodayLabel.setText( TimeHelper.doubleHoursToTime(statistic.get("today")) );
@@ -138,6 +142,7 @@ public class WorkingChartController {
 	public static void update(){
 		instance.updateData();
 	}
+	
 	
     private void updateData(){
     	

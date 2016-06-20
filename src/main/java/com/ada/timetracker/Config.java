@@ -8,9 +8,7 @@ public class Config extends Observable{
 	private static Config instance = new Config();
 	private Preferences prefs;
 	
-	//private final static Logger LOGGER = Logger.getLogger("log");
 	public final static String API_KEY = "apiKey";
-	
 	
 	private Config(){
 	}
@@ -37,7 +35,6 @@ public class Config extends Observable{
 	public void setPreferences(){
 		setChanged();
 		notifyObservers();
-		
 	}
 	
 

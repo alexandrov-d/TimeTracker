@@ -25,6 +25,29 @@
           			<target>1.8</target>
        			</configuration>
 			</plugin>
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.ada.timetracker.App</mainClass>
+						</manifest>
+					</archive>
+					</configuration>
+				</plugin>
 			<plugin>
 				<!-- Build an executable JAR -->
 				<groupId>org.apache.maven.plugins</groupId>
@@ -40,6 +63,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+		
 		</plugins>
 	</build>
 	<dependencies>
@@ -56,7 +80,11 @@
 			<systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>ua.com.zetweb.timetracker</groupId>
+			<artifactId>ws</artifactId>
+			<version>1.0</version>		
+			<scope>compile</scope>	
+		</dependency>
 	</dependencies>
-
 </project>

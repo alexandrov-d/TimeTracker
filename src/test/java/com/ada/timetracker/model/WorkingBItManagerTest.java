@@ -34,7 +34,7 @@ public class WorkingBItManagerTest {
 			manager.addWorkingBitToFile(wb, true);
 		}
 	}*/
-	
+	@Ignore
 	@Test
 	public void TestDeleteOldBits(){
 		File file = new File("my-time-test.xml");

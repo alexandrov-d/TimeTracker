@@ -4,10 +4,10 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ua.com.zetweb.tracktime.ws_test.TimeCatcherInterface;
-import ua.com.zetweb.tracktime.ws_test.TimeCatcherService;
-import ua.com.zetweb.tracktime.ws_test.types.TaskId;
-import ua.com.zetweb.tracktime.ws_test.types.TaskList;
+import ua.com.zetweb.timetracker.TimeCatcherInterface;
+import ua.com.zetweb.timetracker.TimeCatcherService;
+import ua.com.zetweb.timetracker.TaskList;
+import ua.com.zetweb.timetracker.TaskId;
 
 /**
  * Adapter for remote TimecCatcherService.
@@ -24,6 +24,7 @@ public class TimeCatcherClient implements java.util.Observer{
 	private TaskId clientTask = new TaskId();
 
 	private final static Logger LOGGER = Logger.getLogger("log");
+	
 	
 	private TimeCatcherClient(){
 		this.service = new TimeCatcherService();
@@ -43,6 +44,11 @@ public class TimeCatcherClient implements java.util.Observer{
 		return server.getTaskList(apiKey);
 	}
 	
+	/**
+	 * Starts task execution
+	 * @param taskId
+	 * @return
+	 */
 	public boolean startTaskExec( long taskId ){
 		clientTask.setTaskId(taskId);
 		int i = server.startTaskExec(clientTask);
@@ -54,6 +60,11 @@ public class TimeCatcherClient implements java.util.Observer{
 		}
 	}
 	
+	/**
+	 * Stops task execution
+	 * @param taskId
+	 * @return
+	 */
 	public boolean stopTaskExec( long taskId ){
 		clientTask.setTaskId(taskId);
 		int i = server.stopTaskExec(clientTask);
@@ -91,11 +102,6 @@ public class TimeCatcherClient implements java.util.Observer{
 			return true;
 		}
 	}
-
-	/*@Override
-	public void update() {
-		this.apiKey = Config.getInstance().getApiKey();
-	}*/
 
 	@Override
 	public void update(Observable observable, Object arg) {

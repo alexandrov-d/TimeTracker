@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
@@ -34,7 +35,6 @@ import javafx.stage.WindowEvent;
  */
 public class App extends Application {
 	
-	// private final static Logger LOGGER = Logger.getLogger("log");
 	private static App instance = null;
 
 	private Stage primaryStage;
@@ -44,10 +44,7 @@ public class App extends Application {
 	
 	private BorderPane rootLayout;
 	
-//	private java.awt.TrayIcon trayIcon;
-	// int count = 1;
 
-	// private static final String iconImageRun = "/";
 
 	public static void main(String[] args) {
 		launch(args);
@@ -72,14 +69,6 @@ public class App extends Application {
 		Font.loadFont(App.class.getResource("/font/digital-7.ttf").toExternalForm(), 10);
 		Font.loadFont(App.class.getResource("/font/digital-7-mono.ttf").toExternalForm(), 10);
 
-		// Set the application icon.
-		// this.primaryStage.getIcons().add(new
-		// Image("/images/button-red.png"));
-
-		// primaryStage.setMinWidth(600);
-		// primaryStage.setMinHeight(430);
-
-		// setUserAgentStylesheet(STYLESHEET_CASPIAN);
 
 		// Load configuration
 		Config config = Config.getInstance();
@@ -110,7 +99,10 @@ public class App extends Application {
 			}
 		});
 	}
-
+	
+	/**
+	 * Checks if app already running if so exit  
+	 */
 	private void isAppAlreadyRunning() {
 		if (!AppInstanceManager.registerInstance()) {
 			// instance already running.
@@ -152,6 +144,10 @@ public class App extends Application {
 
 	}
 
+	/**
+	 * Shows options dialog
+	 * @return true if ok button clicked
+	 */
 	private boolean showOptionsDialog() {
 		dialogController.setOptions(Config.getInstance().getPreferences());
 		dialogStage.showAndWait();
@@ -159,6 +155,10 @@ public class App extends Application {
 		return dialogController.isOkClicked();
 	}
 
+	/**
+	 * Creates option dialog
+	 * @return false if not created
+	 */
 	private boolean createOptionsDialog() {
 		try {
 			// Load the fxml file and create a new stage for the popup dialog.
@@ -187,8 +187,7 @@ public class App extends Application {
 
 	/**
 	 * Get App instance
-	 * 
-	 * @return App
+	 * @return Application
 	 */
 	public static App getInstance() {
 		return instance;
@@ -198,6 +197,9 @@ public class App extends Application {
 		addAppToTray();
 	}
 	
+	/**
+	 * Adds application icon to system tray
+	 */
 	private void addAppToTray() {
 		try {
 			SystemTray.getSystemTray().remove(trayIcon);
@@ -220,7 +222,6 @@ public class App extends Application {
 			java.awt.Font defaultFont = java.awt.Font.decode(null);
 			java.awt.Font boldFont = defaultFont.deriveFont(java.awt.Font.BOLD);
 			openItem.setFont(boldFont);
-			
 			
 			//exit tray menu item
 			MenuItem exitItem = new java.awt.MenuItem("Выйти");
@@ -251,11 +252,12 @@ public class App extends Application {
 		}
 	}
 
+	/**
+	 * Shows and focuses main application window 
+	 * @param trayIcon system tray object
+	 */
 	private void showStage(TrayIcon trayIcon) {
 		primaryStage.show();
 		primaryStage.toFront();
 	}
-	
-	
-	
 }

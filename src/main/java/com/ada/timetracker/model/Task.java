@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * Model class for a Task.
- *
  */
 public class Task implements Comparable<Task> {
 	
@@ -126,7 +125,6 @@ public class Task implements Comparable<Task> {
     public void setTaskPane(AnchorPane pane) {
     	this.taskPane = pane;
     }
-
     
 	public String toString(){
 		

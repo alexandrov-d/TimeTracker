@@ -30,6 +30,7 @@ public class AppInstanceManager {
     public static boolean registerInstance() {
         // returnValueOnError should be true if lenient (allows app to run on network error) or false if strict.
         boolean returnValueOnError = true;
+        
         // try to open network socket
         // if success, listen to socket for new instance message, return true
         // if unable to open, connect to existing and send new instance message, return false
@@ -66,12 +67,11 @@ public class AppInstanceManager {
                 }
             });
             instanceListenerThread.start();
-            // listen
+            
         } catch (UnknownHostException e) {
             log.info(e.getMessage());
             return returnValueOnError;
         } catch (IOException e) {
-           // log.info("Port is already taken.  Notifying first instance.");
             try {
                 Socket clientSocket = new Socket(InetAddress.getByAddress(new byte[] {127, 0, 0, 1}), SINGLE_INSTANCE_NETWORK_SOCKET);
                 OutputStream out = clientSocket.getOutputStream();

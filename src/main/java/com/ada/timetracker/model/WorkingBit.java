@@ -1,5 +1,11 @@
 package com.ada.timetracker.model;
 
+
+/**
+ * Working but model
+ * @author Alexandrov Dmytro
+ *
+ */
 public class WorkingBit implements Comparable<WorkingBit>{
 	
 	private String hour;

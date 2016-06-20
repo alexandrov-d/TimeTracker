@@ -43,14 +43,11 @@ import javafx.scene.text.TextFlow;
  */
 public class MyTasksController {
 	
-	//private final static Logger LOGGER = Logger.getLogger("log");
-	
 	private static Boolean working = false;
 	private static int timePassed;
     private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(3);
     private static ScheduledFuture<?> taskTimer;
     private static ScheduledFuture<?> taskListTimer;
-    
 
 	private static TaskList taskList;
 	private static long selectedTaskId;
@@ -58,7 +55,6 @@ public class MyTasksController {
 	
 	private  Runnable reinitialize;
 	private Runnable taskWorkingTimer;
-	
 
 	
 	@FXML 
@@ -81,7 +77,6 @@ public class MyTasksController {
 
 	@FXML 
 	private Button finishTaskButton;
-	
 	
 
     /**
@@ -114,6 +109,10 @@ public class MyTasksController {
     	initialize();
     }
     
+    /**
+     * Selects task by its Id
+     * @param taskId
+     */
     private void selectTaskById(long taskId){	
     	selectTask(TaskList.getById(taskId));
     }
@@ -126,7 +125,7 @@ public class MyTasksController {
 
     	Map<Long, Task> tasks = taskList.getMyTaskListData();
     	Set<Long> keys = tasks.keySet();
-
+    	
     	taskListPane.getChildren().clear();
 
     	for (Long key : keys){
@@ -198,6 +197,11 @@ public class MyTasksController {
     	};
     }
     
+    /**
+     * Selecting task on task pane adds selected css class to it
+     * Enabling controls and showing task detail
+     * @param task
+     */
     private void selectTask(Task task ){
     	taskListPane.getChildren().forEach((node)->{
 			int s = node.getStyleClass().indexOf("selected");
@@ -243,7 +247,6 @@ public class MyTasksController {
     }
 
     private void startTask(){
-    	
     	if ( selectedTaskId !=0 && client.startTaskExec(selectedTaskId) ){
     		working = true;
     		startStopTaskButton.getStyleClass().add("stop");
